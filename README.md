@@ -9,4 +9,4 @@
 2. Mouse buttons
 3. Improve non-numberic warning
 4. Fix bugs
-5. Click options
+5. Click type
