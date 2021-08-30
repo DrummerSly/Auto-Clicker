@@ -4,5 +4,5 @@
 3. Enjoy automatic clicking!
 
 ## Notes
-This auto clicker is still work-in-progress (WIP), so expect bugs
-If you found a bug, please put it in issues, so I can fix it
+1. This auto clicker is still work-in-progress (WIP), so expect bugs
+2. If you found a bug, please put it in issues, so I can fix it
