@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace autoClicker2
+namespace autoClicker
 {
     public partial class Form1 : Form
     {
