@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace autoClicker
+namespace autoClicker2
 {
     public partial class Form1 : Form
     {
@@ -30,7 +30,8 @@ namespace autoClicker
 
         public bool enabled = false;
         
-        public string clickType = "single";
+        public string clickType = "Single";
+        public string mouseButton = "Left";
 
         public Form1()
         {
@@ -42,6 +43,8 @@ namespace autoClicker
             CheckForIllegalCrossThreadCalls = false;
             Thread AC = new Thread(AutoClick);
             EnableACHotkey.RunWorkerAsync();
+            ClickTypeDropDownList.Text = "Single";
+            MouseButtonDropDownList.Text = "Left";
 
             AC.Start();
         }
@@ -52,14 +55,164 @@ namespace autoClicker
             {
                 if (enabled == true)
                 {
-                    mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                    Thread.Sleep(1);
+                    if (mouseButton == "Left")
+                    {
+                        if (clickType == "Single")
+                        {
+                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
 
-                    mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                    Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
-                    Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
-                    Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
-                    Thread.Sleep(milisecondsIntervals);
+                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
+                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
+                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+                            Thread.Sleep(milisecondsIntervals);
+                        } else if (clickType == "Double")
+                        {
+                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
+                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
+                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+                            Thread.Sleep(milisecondsIntervals);
+                        } else if (clickType == "Triple")
+                        {
+                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
+                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
+                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+                            Thread.Sleep(milisecondsIntervals);
+                        }
+                    }
+                    else if (mouseButton == "Middle")
+                    {
+                        if (clickType == "Single")
+                        {
+                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
+                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
+                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+                            Thread.Sleep(milisecondsIntervals);
+                        } else if (clickType == "Double")
+                        {
+                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
+                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
+                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+                            Thread.Sleep(milisecondsIntervals);
+                        } else if (clickType == "Triple")
+                        {
+                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
+                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
+                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+                            Thread.Sleep(milisecondsIntervals);
+                        }
+                    }
+                    else if (mouseButton == "Right")
+                    {
+                        if (clickType == "Single")
+                        {
+                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
+                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
+                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+                            Thread.Sleep(milisecondsIntervals);
+                        } else if (clickType == "Double")
+                        {
+                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
+                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
+                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+                            Thread.Sleep(milisecondsIntervals);
+                        } else if (clickType == "Triple")
+                        {
+                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+
+                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
+                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
+                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+                            Thread.Sleep(milisecondsIntervals);
+                        }
+                    }
                 }
                 Thread.Sleep(2);
             }
@@ -176,6 +329,16 @@ namespace autoClicker
         {
             this.ShowInTaskbar = true;
             this.WindowState = FormWindowState.Normal;
+        }
+
+        private void MouseButtonDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mouseButton = MouseButtonDropDownList.Text;
+        }
+
+        private void ClickTypeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            clickType = ClickTypeDropDownList.Text;
         }
     }
 }
