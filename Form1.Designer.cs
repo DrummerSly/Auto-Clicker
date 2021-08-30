@@ -1,5 +1,5 @@
-﻿
-namespace autoClicker
+
+namespace autoClicker2
 {
     partial class Form1
     {
@@ -30,8 +30,9 @@ namespace autoClicker
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.Button Decoration;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.Decoration1 = new System.Windows.Forms.Button();
+            System.Windows.Forms.Button Decoration1;
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,22 +47,32 @@ namespace autoClicker
             this.EnableACHotkey = new System.ComponentModel.BackgroundWorker();
             this.MinimizedNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.UnavaibleCharacterNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.MouseButtonDropDownList = new System.Windows.Forms.ComboBox();
+            this.ClickTypeDropDownList = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            Decoration = new System.Windows.Forms.Button();
+            Decoration1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // Decoration1
+            // Decoration
             // 
-            this.Decoration1.Enabled = false;
-            this.Decoration1.Location = new System.Drawing.Point(6, 14);
-            this.Decoration1.Name = "Decoration1";
-            this.Decoration1.Size = new System.Drawing.Size(123, 132);
-            this.Decoration1.TabIndex = 0;
+            Decoration.Enabled = false;
+            Decoration.Location = new System.Drawing.Point(6, 14);
+            Decoration.Name = "Decoration";
+            Decoration.Size = new System.Drawing.Size(123, 132);
+            Decoration.TabIndex = 0;
+            Decoration.TabStop = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(68, 13);
+            this.label1.Size = new System.Drawing.Size(82, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Click Interval";
             // 
@@ -115,9 +126,9 @@ namespace autoClicker
             // StartButton
             // 
             this.StartButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.StartButton.Location = new System.Drawing.Point(145, 27);
+            this.StartButton.Location = new System.Drawing.Point(12, 157);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(202, 43);
+            this.StartButton.Size = new System.Drawing.Size(285, 50);
             this.StartButton.TabIndex = 6;
             this.StartButton.Text = "START (F6)";
             this.StartButton.UseVisualStyleBackColor = true;
@@ -160,9 +171,9 @@ namespace autoClicker
             // 
             this.StopButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.StopButton.Enabled = false;
-            this.StopButton.Location = new System.Drawing.Point(145, 79);
+            this.StopButton.Location = new System.Drawing.Point(12, 218);
             this.StopButton.Name = "StopButton";
-            this.StopButton.Size = new System.Drawing.Size(202, 43);
+            this.StopButton.Size = new System.Drawing.Size(285, 53);
             this.StopButton.TabIndex = 10;
             this.StopButton.Text = "STOP (F7)";
             this.StopButton.UseVisualStyleBackColor = true;
@@ -186,23 +197,108 @@ namespace autoClicker
             this.UnavaibleCharacterNotifyIcon.Text = "UnavaibleCharacterNotifyIcon";
             this.UnavaibleCharacterNotifyIcon.Visible = true;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(157, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(82, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Click Options";
+            // 
+            // Decoration1
+            // 
+            Decoration1.Enabled = false;
+            Decoration1.Location = new System.Drawing.Point(149, 14);
+            Decoration1.Name = "Decoration1";
+            Decoration1.Size = new System.Drawing.Size(154, 85);
+            Decoration1.TabIndex = 12;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(157, 39);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(76, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Mouse Button:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(157, 68);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(60, 13);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "Click Type:";
+            // 
+            // MouseButtonDropDownList
+            // 
+            this.MouseButtonDropDownList.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.MouseButtonDropDownList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.MouseButtonDropDownList.FormattingEnabled = true;
+            this.MouseButtonDropDownList.Items.AddRange(new object[] {
+            "Left",
+            "Middle",
+            "Right"});
+            this.MouseButtonDropDownList.Location = new System.Drawing.Point(239, 36);
+            this.MouseButtonDropDownList.MaxDropDownItems = 3;
+            this.MouseButtonDropDownList.Name = "MouseButtonDropDownList";
+            this.MouseButtonDropDownList.Size = new System.Drawing.Size(58, 21);
+            this.MouseButtonDropDownList.TabIndex = 17;
+            this.MouseButtonDropDownList.SelectedIndexChanged += new System.EventHandler(this.MouseButtonDropDownList_SelectedIndexChanged);
+            // 
+            // ClickTypeDropDownList
+            // 
+            this.ClickTypeDropDownList.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ClickTypeDropDownList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ClickTypeDropDownList.FormattingEnabled = true;
+            this.ClickTypeDropDownList.Items.AddRange(new object[] {
+            "Single",
+            "Double",
+            "Triple"});
+            this.ClickTypeDropDownList.Location = new System.Drawing.Point(239, 65);
+            this.ClickTypeDropDownList.MaxDropDownItems = 3;
+            this.ClickTypeDropDownList.Name = "ClickTypeDropDownList";
+            this.ClickTypeDropDownList.Size = new System.Drawing.Size(58, 21);
+            this.ClickTypeDropDownList.TabIndex = 18;
+            this.ClickTypeDropDownList.SelectedIndexChanged += new System.EventHandler(this.ClickTypeDropDownList_SelectedIndexChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(146, 117);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(148, 13);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "Auto Clicker by Drumly_x";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(359, 159);
-            this.Controls.Add(this.StopButton);
+            this.ClientSize = new System.Drawing.Size(309, 283);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.ClickTypeDropDownList);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.MouseButtonDropDownList);
             this.Controls.Add(this.Miliseconds);
-            this.Controls.Add(this.Seconds);
-            this.Controls.Add(this.Minutes);
-            this.Controls.Add(this.StartButton);
-            this.Controls.Add(this.Hours);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.Hours);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.Decoration1);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.StopButton);
+            this.Controls.Add(this.Seconds);
+            this.Controls.Add(this.Minutes);
+            this.Controls.Add(this.StartButton);
+            this.Controls.Add(Decoration);
+            this.Controls.Add(Decoration1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -230,8 +326,13 @@ namespace autoClicker
         private System.Windows.Forms.Button StopButton;
         private System.ComponentModel.BackgroundWorker EnableACHotkey;
         private System.Windows.Forms.NotifyIcon MinimizedNotifyIcon;
-        private System.Windows.Forms.Button Decoration1;
         private System.Windows.Forms.NotifyIcon UnavaibleCharacterNotifyIcon;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ComboBox MouseButtonDropDownList;
+        private System.Windows.Forms.ComboBox ClickTypeDropDownList;
+        private System.Windows.Forms.Label label9;
     }
 }
 
