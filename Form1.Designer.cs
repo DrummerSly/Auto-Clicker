@@ -1,5 +1,5 @@
 
-namespace autoClicker
+namespace autoClicker2
 {
     partial class Form1
     {
@@ -31,8 +31,8 @@ namespace autoClicker
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Button Decoration;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             System.Windows.Forms.Button Decoration1;
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -53,6 +53,7 @@ namespace autoClicker
             this.MouseButtonDropDownList = new System.Windows.Forms.ComboBox();
             this.ClickTypeDropDownList = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.OptionsButton = new System.Windows.Forms.Button();
             Decoration = new System.Windows.Forms.Button();
             Decoration1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -65,6 +66,14 @@ namespace autoClicker
             Decoration.Size = new System.Drawing.Size(123, 132);
             Decoration.TabIndex = 0;
             Decoration.TabStop = false;
+            // 
+            // Decoration1
+            // 
+            Decoration1.Enabled = false;
+            Decoration1.Location = new System.Drawing.Point(149, 14);
+            Decoration1.Name = "Decoration1";
+            Decoration1.Size = new System.Drawing.Size(154, 85);
+            Decoration1.TabIndex = 12;
             // 
             // label1
             // 
@@ -128,7 +137,7 @@ namespace autoClicker
             this.StartButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.StartButton.Location = new System.Drawing.Point(12, 157);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(285, 50);
+            this.StartButton.Size = new System.Drawing.Size(137, 50);
             this.StartButton.TabIndex = 6;
             this.StartButton.Text = "START (F6)";
             this.StartButton.UseVisualStyleBackColor = true;
@@ -187,7 +196,7 @@ namespace autoClicker
             // 
             this.MinimizedNotifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.MinimizedNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("MinimizedNotifyIcon.Icon")));
-            this.MinimizedNotifyIcon.Text = "MinimizedNotifyIcon";
+            this.MinimizedNotifyIcon.Text = "Auto Clicker";
             this.MinimizedNotifyIcon.Visible = true;
             this.MinimizedNotifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MinimizedNotifyIcon_MouseClick);
             // 
@@ -206,14 +215,6 @@ namespace autoClicker
             this.label6.Size = new System.Drawing.Size(82, 13);
             this.label6.TabIndex = 11;
             this.label6.Text = "Click Options";
-            // 
-            // Decoration1
-            // 
-            Decoration1.Enabled = false;
-            Decoration1.Location = new System.Drawing.Point(149, 14);
-            Decoration1.Name = "Decoration1";
-            Decoration1.Size = new System.Drawing.Size(154, 85);
-            Decoration1.TabIndex = 12;
             // 
             // label7
             // 
@@ -275,11 +276,23 @@ namespace autoClicker
             this.label9.TabIndex = 19;
             this.label9.Text = "Auto Clicker by Drumly_x";
             // 
+            // OptionsButton
+            // 
+            this.OptionsButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.OptionsButton.Location = new System.Drawing.Point(160, 157);
+            this.OptionsButton.Name = "OptionsButton";
+            this.OptionsButton.Size = new System.Drawing.Size(137, 50);
+            this.OptionsButton.TabIndex = 20;
+            this.OptionsButton.Text = "OPTIONS";
+            this.OptionsButton.UseVisualStyleBackColor = true;
+            this.OptionsButton.Click += new System.EventHandler(this.OptionsButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(309, 283);
+            this.Controls.Add(this.OptionsButton);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.ClickTypeDropDownList);
             this.Controls.Add(this.label8);
@@ -303,6 +316,7 @@ namespace autoClicker
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Auto Clicker";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
@@ -333,6 +347,7 @@ namespace autoClicker
         private System.Windows.Forms.ComboBox MouseButtonDropDownList;
         private System.Windows.Forms.ComboBox ClickTypeDropDownList;
         private System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Button OptionsButton;
     }
 }
 
