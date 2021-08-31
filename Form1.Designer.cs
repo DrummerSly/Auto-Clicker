@@ -1,5 +1,4 @@
-
-namespace autoClicker2
+namespace autoClicker
 {
     partial class Form1
     {
