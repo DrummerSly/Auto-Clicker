@@ -1,9 +1,22 @@
-## Usage
+# Usage
 1. Download the latest release from https://github.com/DrummerSly/AutoClicker/releases
 2. Run `Auto Clicker.exe`
 3. Enjoy automatic clicking!
 
-## Notes
-1. This auto clicker is still work-in-progress (WIP), so expect bugs
-2. If you found a bug, please put it in issues, so I can fix it
-3. If you download it for the first time, for some reason. Windows is saying it's a virus, I don't know what triggers it but I will try to fix it
+# Submitting an Issue
+
+Before [submitting an blank issue](https://github.com/DrummerSly/AutoClickers/issues/new), please:
+- Make sure you submit an issue or suggestion
+- Please read previous issue to make sure your issue was not listed/answered before
+- Describe the issue as clear as possible, issues with bad titles and low quality descriptions will be deleted _(e.g. funny bug, its bad)_
+- Include steps on how to reproduce the issue
+- Include what you expected to happen to the issue
+- If possible, please include screenshots to help explain your problem
+- Include on what browser the issue occurs _(e.g. chrome, safari)_
+- Include on what OS the issue occurs _(e.g. Windows 10, Windows 7)_
+- Include additional context, don't worry, this is just optional. You can ignore it if you want to
+
+Submitted issues that's not following the guidelines will be closed or deleted.
+
+# Disclaimer
+If you download the program for the first time, Windows is saying it's a virus, I don't know what triggers it but I will try to fix it
