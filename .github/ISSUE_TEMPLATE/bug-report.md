@@ -1,7 +1,7 @@
 ---
 name: Bug Report
 about: Create a report to help the auto clicker improve
-title: "[BUG]"
+title: "[BUG NAME]"
 labels: bug
 assignees: DrummerSly
 
