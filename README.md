@@ -19,4 +19,4 @@ Before [submitting an blank issue](https://github.com/DrummerSly/AutoClickers/is
 Submitted issues that's not following the guidelines will be closed or deleted.
 
 ## Disclaimer
-If you download the program for the first time, Windows is saying it's a virus, I don't know what triggers it but I will try to fix it
+If you download the program for the first time, Windows is saying it's a virus. I will try to fix this as soon as possible.
