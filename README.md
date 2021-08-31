@@ -3,7 +3,7 @@
 2. Run `Auto Clicker.exe`
 3. Enjoy automatic clicking!
 
-# Submitting an Issue
+## Submitting an Issue
 
 Before [submitting an blank issue](https://github.com/DrummerSly/AutoClickers/issues/new), please:
 - Make sure you submit an issue or suggestion
@@ -18,5 +18,5 @@ Before [submitting an blank issue](https://github.com/DrummerSly/AutoClickers/is
 
 Submitted issues that's not following the guidelines will be closed or deleted.
 
-# Disclaimer
+## Disclaimer
 If you download the program for the first time, Windows is saying it's a virus, I don't know what triggers it but I will try to fix it
