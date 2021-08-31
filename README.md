@@ -5,7 +5,7 @@
 
 ## Submitting an Issue
 
-Before [submitting an blank issue](https://github.com/DrummerSly/AutoClickers/issues/new), please:
+Before [submitting an blank bug issue](https://github.com/DrummerSly/AutoClickers/issues/new), please:
 - Make sure you submit an issue or suggestion
 - Please read previous issue to make sure your issue was not listed/answered before
 - Describe the issue as clear as possible, issues with bad titles and low quality descriptions will be deleted _(e.g. funny bug, its bad)_
