@@ -1,4 +1,5 @@
-namespace autoClicker
+
+namespace autoClicker2
 {
     partial class Form1
     {
@@ -30,7 +31,7 @@ namespace autoClicker
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Button Decoration;
-            System.Windows.Forms.Button Decoration1;
+            System.Windows.Forms.Button button1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -45,34 +46,37 @@ namespace autoClicker
             this.StopButton = new System.Windows.Forms.Button();
             this.EnableACHotkey = new System.ComponentModel.BackgroundWorker();
             this.MinimizedNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.UnavaibleCharacterNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.MouseButtonDropDownList = new System.Windows.Forms.ComboBox();
             this.ClickTypeDropDownList = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.OptionsButton = new System.Windows.Forms.Button();
+            this.MinimizetoTrayCheckBox = new System.Windows.Forms.CheckBox();
             Decoration = new System.Windows.Forms.Button();
-            Decoration1 = new System.Windows.Forms.Button();
+            button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Decoration
             // 
+            Decoration.BackColor = System.Drawing.Color.Transparent;
             Decoration.Enabled = false;
             Decoration.Location = new System.Drawing.Point(6, 14);
             Decoration.Name = "Decoration";
             Decoration.Size = new System.Drawing.Size(123, 132);
             Decoration.TabIndex = 0;
             Decoration.TabStop = false;
+            Decoration.UseVisualStyleBackColor = false;
             // 
-            // Decoration1
+            // button1
             // 
-            Decoration1.Enabled = false;
-            Decoration1.Location = new System.Drawing.Point(149, 14);
-            Decoration1.Name = "Decoration1";
-            Decoration1.Size = new System.Drawing.Size(154, 85);
-            Decoration1.TabIndex = 12;
+            button1.BackColor = System.Drawing.Color.Transparent;
+            button1.Enabled = false;
+            button1.Location = new System.Drawing.Point(149, 14);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(154, 90);
+            button1.TabIndex = 22;
+            button1.TabStop = false;
+            button1.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
@@ -136,7 +140,7 @@ namespace autoClicker
             this.StartButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.StartButton.Location = new System.Drawing.Point(12, 157);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(137, 50);
+            this.StartButton.Size = new System.Drawing.Size(285, 50);
             this.StartButton.TabIndex = 6;
             this.StartButton.Text = "START (F6)";
             this.StartButton.UseVisualStyleBackColor = true;
@@ -199,12 +203,6 @@ namespace autoClicker
             this.MinimizedNotifyIcon.Visible = true;
             this.MinimizedNotifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MinimizedNotifyIcon_MouseClick);
             // 
-            // UnavaibleCharacterNotifyIcon
-            // 
-            this.UnavaibleCharacterNotifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Error;
-            this.UnavaibleCharacterNotifyIcon.Text = "UnavaibleCharacterNotifyIcon";
-            this.UnavaibleCharacterNotifyIcon.Visible = true;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -265,34 +263,23 @@ namespace autoClicker
             this.ClickTypeDropDownList.TabIndex = 18;
             this.ClickTypeDropDownList.SelectedIndexChanged += new System.EventHandler(this.ClickTypeDropDownList_SelectedIndexChanged);
             // 
-            // label9
+            // MinimizetoTrayCheckBox
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(146, 117);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(148, 13);
-            this.label9.TabIndex = 19;
-            this.label9.Text = "Auto Clicker by Drumly_x";
-            // 
-            // OptionsButton
-            // 
-            this.OptionsButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.OptionsButton.Location = new System.Drawing.Point(160, 157);
-            this.OptionsButton.Name = "OptionsButton";
-            this.OptionsButton.Size = new System.Drawing.Size(137, 50);
-            this.OptionsButton.TabIndex = 20;
-            this.OptionsButton.Text = "OPTIONS";
-            this.OptionsButton.UseVisualStyleBackColor = true;
-            this.OptionsButton.Click += new System.EventHandler(this.OptionsButton_Click);
+            this.MinimizetoTrayCheckBox.AutoSize = true;
+            this.MinimizetoTrayCheckBox.Location = new System.Drawing.Point(171, 116);
+            this.MinimizetoTrayCheckBox.Name = "MinimizetoTrayCheckBox";
+            this.MinimizetoTrayCheckBox.Size = new System.Drawing.Size(102, 17);
+            this.MinimizetoTrayCheckBox.TabIndex = 23;
+            this.MinimizetoTrayCheckBox.Text = "Minimize to Tray";
+            this.MinimizetoTrayCheckBox.UseVisualStyleBackColor = true;
+            this.MinimizetoTrayCheckBox.CheckedChanged += new System.EventHandler(this.MinimizetoTrayCheckBox_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(309, 283);
-            this.Controls.Add(this.OptionsButton);
-            this.Controls.Add(this.label9);
+            this.Controls.Add(this.MinimizetoTrayCheckBox);
             this.Controls.Add(this.ClickTypeDropDownList);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -310,7 +297,7 @@ namespace autoClicker
             this.Controls.Add(this.Minutes);
             this.Controls.Add(this.StartButton);
             this.Controls.Add(Decoration);
-            this.Controls.Add(Decoration1);
+            this.Controls.Add(button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -339,14 +326,12 @@ namespace autoClicker
         private System.Windows.Forms.Button StopButton;
         private System.ComponentModel.BackgroundWorker EnableACHotkey;
         private System.Windows.Forms.NotifyIcon MinimizedNotifyIcon;
-        private System.Windows.Forms.NotifyIcon UnavaibleCharacterNotifyIcon;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox MouseButtonDropDownList;
-        private System.Windows.Forms.ComboBox ClickTypeDropDownList;
-        private System.Windows.Forms.Label label9;
-        public System.Windows.Forms.Button OptionsButton;
+        public System.Windows.Forms.ComboBox ClickTypeDropDownList;
+        public System.Windows.Forms.CheckBox MinimizetoTrayCheckBox;
     }
 }
 
