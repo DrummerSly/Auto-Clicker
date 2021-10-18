@@ -1,12 +1,12 @@
-using autoClicker;
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using autoClicker.Properties;
 
-namespace autoClicker
+namespace autoClicker2
 {
     public partial class Form1 : Form
     {
@@ -29,15 +29,12 @@ namespace autoClicker
         public int secondsIntervals = 000;
         public int minutesIntervals = 0;
         public int hoursIntervals = 0;
-        
-        public int parsedValue; // The value to check if the character you put in textbox interval's is numeric
 
         public bool enabled = false;
-        
+        public bool minimizeToTray = false;
+
         public string clickType = "Single";
         public string mouseButton = "Left";
-
-        Form2 f2 = new Form2();
 
         public Form1()
         {
@@ -47,13 +44,107 @@ namespace autoClicker
         private void Form1_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
-            Thread AC = new Thread(AutoClick); // Converts the void to thread or something
+            Thread AC = new Thread(AutoClick);
             EnableACHotkey.RunWorkerAsync(); // Starts the AC Hotkey
             ClickTypeDropDownList.Text = "Single";
             MouseButtonDropDownList.Text = "Left";
             MinimizedNotifyIcon.Visible = false;
+            MinimizetoTrayCheckBox.Checked = (bool)Settings.Default["MinimizeToTray"]; // Loads the user settings
 
             AC.Start(); // Starts AutoClick()
+        }
+
+        private void SingleClickType(int HEXCODEUP, int HEXCODEDOWN)
+        {
+            mouse_event(dwFlags: HEXCODEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0); // Holds down mouse left button
+            Thread.Sleep(1); // Thread.Sleep(); is basically wait() for some coding languages but it's different
+
+            mouse_event(dwFlags: HEXCODEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0); // Releases mouse left button
+            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0'))); // Thread.Sleep(??00000); ("?" means the text you put in textbox interval's)
+            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0'))); // Thread.Sleep(?0000);
+            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0'))); // Thread.Sleep(?000);
+            Thread.Sleep(milisecondsIntervals); // Thread.SLeep(?);
+        }
+
+        private void DoubleClickType(int HEXCODEUP, int HEXCODEDOWN)
+        {
+            mouse_event(dwFlags: HEXCODEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(1);
+
+            mouse_event(dwFlags: HEXCODEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(1);
+
+            mouse_event(dwFlags: HEXCODEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(1);
+
+            mouse_event(dwFlags: HEXCODEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
+            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
+            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+            Thread.Sleep(milisecondsIntervals);
+        }
+
+        private void TripleClickType(int HEXCODEUP, int HEXCODEDOWN)
+        {
+            mouse_event(dwFlags: HEXCODEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(1);
+
+            mouse_event(dwFlags: HEXCODEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(1);
+
+            mouse_event(dwFlags: HEXCODEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(1);
+
+            mouse_event(dwFlags: HEXCODEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(1);
+
+            mouse_event(dwFlags: HEXCODEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(1);
+
+            mouse_event(dwFlags: HEXCODEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(1);
+
+            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
+            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
+            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+            Thread.Sleep(milisecondsIntervals);
+        }
+
+        private void RegexIsMatch(TextBox Textbox, int Interval)
+        {
+            if (Regex.IsMatch(Textbox.Text, @"^\d+$"))
+            {
+                Interval = int.Parse(Textbox.Text); // Makes the interval's value to the text of textbox interval's
+            }
+            else
+            {
+                if (Textbox.Text == "".ToString())
+                {
+                    return;
+                }
+                Textbox.Text = "".ToString();
+                return;
+            }
+        }
+
+        private void RegexIsMatch2(TextBox Textbox, int Interval, int Number)
+        {
+            if (Regex.IsMatch(Textbox.Text, @"^\d+$"))
+            {
+                if (int.Parse(Textbox.Text) != 0) // Checks if the numeric isn't 0
+                {
+                    Interval = int.Parse(Textbox.Text) + Number;
+                }
+            }
+            else
+            {
+                if (Textbox.Text == "".ToString())
+                {
+                    return;
+                }
+                Textbox.Text = "".ToString();
+                return;
+            }
         }
 
         private void AutoClick()
@@ -66,162 +157,43 @@ namespace autoClicker
                     {
                         if (clickType == "Single") // Checks if ClickTypeDropDownList's text is Single
                         {
-                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0); // Holds down mouse left button
-                            Thread.Sleep(1); // Thread.Sleep(); is basically wait() for some coding languages but it's different
-
-                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0); // Releases mouse left button
-                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0'))); // Thread.Sleep(??00000); ("?" means the text you put in textbox interval's
-                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0'))); // Thread.Sleep(?0000);
-                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0'))); // Thread.Sleep(?000);
-                            Thread.Sleep(milisecondsIntervals); // Thread.SLeep(?);
+                            SingleClickType(LEFTUP, LEFTDOWN);
                         } else if (clickType == "Double") // Checks if ClickTypeDropDownList's text is Double
                         {
-                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
-                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
-                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
-                            Thread.Sleep(milisecondsIntervals);
+                            DoubleClickType(LEFTUP, LEFTDOWN);
                         } else if (clickType == "Triple") // Checks if ClickTypeDropDownList's text is Triple
                         {
-                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
-                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
-                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
-                            Thread.Sleep(milisecondsIntervals);
+                            TripleClickType(LEFTUP, LEFTDOWN);
                         }
                     }
                     else if (mouseButton == "Middle") // Checks if MouseButtonDropDownList's text is Middle
                     {
                         if (clickType == "Single")
                         {
-                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
-                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
-                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
+                            SingleClickType(MIDDLEUP, MIDDLEDOWN);
                             Thread.Sleep(milisecondsIntervals);
                         } else if (clickType == "Double")
                         {
-                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
-                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
-                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
-                            Thread.Sleep(milisecondsIntervals);
+                            DoubleClickType(MIDDLEUP, MIDDLEDOWN);
                         } else if (clickType == "Triple")
                         {
-                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: MIDDLEUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: MIDDLEDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
-                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
-                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
-                            Thread.Sleep(milisecondsIntervals);
+                            TripleClickType(MIDDLEUP, MIDDLEDOWN);
                         }
                     }
                     else if (mouseButton == "Right") // Checks if MouseButtonDropDownList's text is Right
                     {
                         if (clickType == "Single")
                         {
-                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
-                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
-                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
-                            Thread.Sleep(milisecondsIntervals);
+                            SingleClickType(RIGHTUP, RIGHTDOWN);
                         } else if (clickType == "Double")
                         {
-                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
-                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
-                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
-                            Thread.Sleep(milisecondsIntervals);
+                            DoubleClickType(RIGHTUP, RIGHTDOWN);
                         } else if (clickType == "Triple")
                         {
-                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(1);
-
-                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                            Thread.Sleep(int.Parse(hoursIntervals.ToString().PadRight(7, '0')));
-                            Thread.Sleep(int.Parse(minutesIntervals.ToString().PadRight(5, '0')));
-                            Thread.Sleep(int.Parse(secondsIntervals.ToString().PadRight(4, '0')));
-                            Thread.Sleep(milisecondsIntervals);
+                            TripleClickType(RIGHTUP, RIGHTDOWN);
                         }
                     }
                 }
-                Thread.Sleep(2);
             }
         }
 
@@ -241,59 +213,22 @@ namespace autoClicker
 
         private void Miliseconds_TextChanged(object sender, EventArgs e)
         {
-            if (!int.TryParse(Miliseconds.Text, out parsedValue)) // Checks if the character you put in textbox interval's is numeric
-            {
-                MessageBox.Show("Please enter a number");
-                return;
-            } else
-            {
-                milisecondsIntervals = int.Parse(Miliseconds.Text); // Makes the interval's value to the text of textbox interval's
-            }
+            RegexIsMatch(Miliseconds, milisecondsIntervals);
         }
 
         private void Seconds_TextChanged(object sender, EventArgs e)
         {
-            if (!int.TryParse(Seconds.Text, out parsedValue))
-            {
-                MessageBox.Show("Please enter a number");
-                return;
-            }
-            else
-            {
-                secondsIntervals = int.Parse(Seconds.Text);
-            }
+            RegexIsMatch(Seconds, secondsIntervals);
         }
 
         private void Minutes_TextChanged(object sender, EventArgs e)
         {
-            if (!int.TryParse(Minutes.Text, out parsedValue))
-            {
-                MessageBox.Show("Please enter a number");
-                return;
-            }
-            else
-            {
-                if (int.Parse(Minutes.Text) != 0) // Checks if the numeric isn't 0
-                {
-                    minutesIntervals = int.Parse(Minutes.Text) + 5; 
-                }
-            }
+            RegexIsMatch2(Minutes, minutesIntervals, 5);
         }
 
         private void Hours_TextChanged(object sender, EventArgs e)
-        {      
-            if (!int.TryParse(Hours.Text, out parsedValue))
-            {
-                MessageBox.Show("Please enter a number");
-                return;
-            }
-            else
-            {
-                if (int.Parse(Hours.Text) != 0)
-                {
-                    hoursIntervals = int.Parse(Hours.Text) + 35;
-                }
-            }
+        {
+            RegexIsMatch2(Hours, hoursIntervals, 35);
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -324,7 +259,7 @@ namespace autoClicker
         {
             if (this.WindowState == FormWindowState.Minimized) // Checks if the window is minimized
             {           
-                if (f2.minimizeToTray == true)
+                if (minimizeToTray == true) // Checks if minimizeToTray's value is true
                 {
                     this.ShowInTaskbar = false;
                     MinimizedNotifyIcon.Visible = true;
@@ -353,9 +288,11 @@ namespace autoClicker
             clickType = ClickTypeDropDownList.Text;
         }
 
-        private void OptionsButton_Click(object sender, EventArgs e)
+        private void MinimizetoTrayCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            f2.Show(); // Shows Options window
+            minimizeToTray = MinimizetoTrayCheckBox.Checked; // Replaces minimizeToTray's value to the current value
+            Settings.Default["MinimizeToTray"] = MinimizetoTrayCheckBox.Checked; // Replaces "False" to the current value
+            Settings.Default.Save(); // Saves the current value
         }
     }
 }
