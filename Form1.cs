@@ -4,18 +4,22 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using autoClicker;
 using autoClicker.Properties;
 
 namespace autoClicker2
 {
     public partial class Form1 : Form
     {
+        // This lines is very important
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(Keys vKey);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
 
+        Form2 form2 = new Form2();
+        
         // Hex codes for mouse buttons
         private const int LEFTUP = 0x0004;
         private const int LEFTDOWN = 0x0002;
@@ -23,15 +27,13 @@ namespace autoClicker2
         private const int MIDDLEDOWN = 0x0020;
         private const int RIGHTUP = 0x0010;
         private const int RIGHTDOWN = 0x0008;
-
-        // If you want to change any of these values, you can but you need to change the textbox interval's text too
+       
         public int milisecondsIntervals = 100;
-        public int secondsIntervals = 000;
+        public int secondsIntervals = 0;
         public int minutesIntervals = 0;
         public int hoursIntervals = 0;
 
         public bool enabled = false;
-        public bool minimizeToTray = false;
 
         public string clickType = "Single";
         public string mouseButton = "Left";
@@ -45,11 +47,34 @@ namespace autoClicker2
         {
             CheckForIllegalCrossThreadCalls = false;
             Thread AC = new Thread(AutoClick);
-            EnableACHotkey.RunWorkerAsync(); // Starts the AC Hotkey
+            AC.IsBackground = true;
+            EnableACHotkey.RunWorkerAsync(); // Starts the AC background worker
             ClickTypeDropDownList.Text = "Single";
             MouseButtonDropDownList.Text = "Left";
             MinimizedNotifyIcon.Visible = false;
-            MinimizetoTrayCheckBox.Checked = (bool)Settings.Default["MinimizeToTray"]; // Loads the user settings
+            form2.MinimizetoTrayCheckBox.Checked = Settings.Default.MinimizeToTray; // Loads the user settings
+            form2.EnableDefaultIntervalsCheckBox.Checked = Settings.Default.EnableDefaultIntervals;
+            form2.DisableTripleCheckBox.Checked = Settings.Default.DisableTriple;
+            form2.EnableDefaultOptionsCheckBox.Checked = Settings.Default.EnableDefaultOptions;
+
+            if (form2.disableTriple == true)
+            {
+                ClickTypeDropDownList.Items.Remove("Triple");
+            }
+
+            if (form2.enableDefaultIntervals == true)
+            {
+                Hours.Text = Convert.ToString(Settings.Default.EDIHoursInterval);
+                Minutes.Text = Convert.ToString(Settings.Default.EDIMinutesInterval);
+                Seconds.Text = Convert.ToString(Settings.Default.EDISecondsInterval);
+                Miliseconds.Text = Convert.ToString(Settings.Default.EDIMilisecondsInterval);
+            }
+
+            if (form2.enableDefaultOptions == true)
+            {
+                MouseButtonDropDownList.SelectedItem = Settings.Default.EDOMouseButton;
+                ClickTypeDropDownList.SelectedItem = Settings.Default.EDOClickType;
+            }
 
             AC.Start(); // Starts AutoClick()
         }
@@ -110,43 +135,6 @@ namespace autoClicker2
             Thread.Sleep(milisecondsIntervals);
         }
 
-        private void RegexIsMatch(TextBox Textbox, int Interval)
-        {
-            if (Regex.IsMatch(Textbox.Text, @"^\d+$"))
-            {
-                Interval = int.Parse(Textbox.Text); // Makes the interval's value to the text of textbox interval's
-            }
-            else
-            {
-                if (Textbox.Text == "".ToString())
-                {
-                    return;
-                }
-                Textbox.Text = "".ToString();
-                return;
-            }
-        }
-
-        private void RegexIsMatch2(TextBox Textbox, int Interval, int Number)
-        {
-            if (Regex.IsMatch(Textbox.Text, @"^\d+$"))
-            {
-                if (int.Parse(Textbox.Text) != 0) // Checks if the numeric isn't 0
-                {
-                    Interval = int.Parse(Textbox.Text) + Number;
-                }
-            }
-            else
-            {
-                if (Textbox.Text == "".ToString())
-                {
-                    return;
-                }
-                Textbox.Text = "".ToString();
-                return;
-            }
-        }
-
         private void AutoClick()
         {
             while (true)
@@ -158,10 +146,12 @@ namespace autoClicker2
                         if (clickType == "Single") // Checks if ClickTypeDropDownList's text is Single
                         {
                             SingleClickType(LEFTUP, LEFTDOWN);
-                        } else if (clickType == "Double") // Checks if ClickTypeDropDownList's text is Double
+                        }
+                        else if (clickType == "Double") // Checks if ClickTypeDropDownList's text is Double
                         {
                             DoubleClickType(LEFTUP, LEFTDOWN);
-                        } else if (clickType == "Triple") // Checks if ClickTypeDropDownList's text is Triple
+                        }
+                        else if (clickType == "Triple") // Checks if ClickTypeDropDownList's text is Triple
                         {
                             TripleClickType(LEFTUP, LEFTDOWN);
                         }
@@ -171,11 +161,12 @@ namespace autoClicker2
                         if (clickType == "Single")
                         {
                             SingleClickType(MIDDLEUP, MIDDLEDOWN);
-                            Thread.Sleep(milisecondsIntervals);
-                        } else if (clickType == "Double")
+                        }
+                        else if (clickType == "Double")
                         {
                             DoubleClickType(MIDDLEUP, MIDDLEDOWN);
-                        } else if (clickType == "Triple")
+                        }
+                        else if (clickType == "Triple")
                         {
                             TripleClickType(MIDDLEUP, MIDDLEDOWN);
                         }
@@ -185,15 +176,18 @@ namespace autoClicker2
                         if (clickType == "Single")
                         {
                             SingleClickType(RIGHTUP, RIGHTDOWN);
-                        } else if (clickType == "Double")
+                        }
+                        else if (clickType == "Double")
                         {
                             DoubleClickType(RIGHTUP, RIGHTDOWN);
-                        } else if (clickType == "Triple")
+                        }
+                        else if (clickType == "Triple")
                         {
                             TripleClickType(RIGHTUP, RIGHTDOWN);
                         }
                     }
                 }
+                Thread.Sleep(1);
             }
         }
 
@@ -213,22 +207,56 @@ namespace autoClicker2
 
         private void Miliseconds_TextChanged(object sender, EventArgs e)
         {
-            RegexIsMatch(Miliseconds, milisecondsIntervals);
+            if (Regex.IsMatch(Miliseconds.Text, @"^\d+$"))
+            {
+                milisecondsIntervals = int.Parse(Miliseconds.Text); // Makes the interval's value to the text of textbox interval's
+            }
+            else
+            {
+                StartButton.Enabled = false;
+            }
         }
 
         private void Seconds_TextChanged(object sender, EventArgs e)
         {
-            RegexIsMatch(Seconds, secondsIntervals);
+            if (Regex.IsMatch(Miliseconds.Text, @"^\d+$"))
+            {
+                secondsIntervals = int.Parse(Seconds.Text);
+            }
+            else
+            {
+                StartButton.Enabled = false;
+            }
         }
 
         private void Minutes_TextChanged(object sender, EventArgs e)
         {
-            RegexIsMatch2(Minutes, minutesIntervals, 5);
+            if (Regex.IsMatch(Minutes.Text, @"^\d+$"))
+            {
+                if (int.Parse(Minutes.Text) != 0) // Checks if the numeric isn't 0
+                {
+                    minutesIntervals = int.Parse(Minutes.Text) + 5;
+                }
+            }
+            else
+            {
+                StartButton.Enabled = false;
+            }
         }
 
         private void Hours_TextChanged(object sender, EventArgs e)
         {
-            RegexIsMatch2(Hours, hoursIntervals, 35);
+            if (Regex.IsMatch(Hours.Text, @"^\d+$"))
+            {
+                if (int.Parse(Hours.Text) != 0) // Checks if the numeric isn't 0
+                {
+                    hoursIntervals = int.Parse(Hours.Text) + 5;
+                }
+            }
+            else
+            {
+                StartButton.Enabled = false;
+            }
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -237,7 +265,7 @@ namespace autoClicker2
             {
                 if (enabled == true)
                 {
-                    if (GetAsyncKeyState(Keys.F7)< 0) // Checks if you pressed F7
+                    if (GetAsyncKeyState(Keys.F7) < 0) // Checks if you pressed F7
                     {
                         StartButton.Enabled = true;
                         enabled = false;
@@ -245,13 +273,14 @@ namespace autoClicker2
                     }
                 } else if (enabled == false)
                 {
-                    if (GetAsyncKeyState(Keys.F6)< 0)
+                    if (GetAsyncKeyState(Keys.F6) < 0)
                     {
                         StartButton.Enabled = false;
                         enabled = true;
                         StopButton.Enabled = true;
                     }    
                 }
+                Thread.Sleep(1);
             }
         }
 
@@ -259,14 +288,11 @@ namespace autoClicker2
         {
             if (this.WindowState == FormWindowState.Minimized) // Checks if the window is minimized
             {           
-                if (minimizeToTray == true) // Checks if minimizeToTray's value is true
+                if (form2.minimizeToTray == true) // Checks if minimizeToTray's value is true
                 {
                     this.ShowInTaskbar = false;
                     MinimizedNotifyIcon.Visible = true;
                     MinimizedNotifyIcon.Icon = this.Icon;
-                    MinimizedNotifyIcon.BalloonTipTitle = "Auto Clicker has been minimized";
-                    MinimizedNotifyIcon.BalloonTipText = "Click the icon to open the application again";
-                    MinimizedNotifyIcon.ShowBalloonTip(1000); // Shows the notify icon to the taskbar for 1 second
                 }
             }
         }
@@ -288,11 +314,24 @@ namespace autoClicker2
             clickType = ClickTypeDropDownList.Text;
         }
 
-        private void MinimizetoTrayCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void OptionsButton_Click(object sender, EventArgs e)
         {
-            minimizeToTray = MinimizetoTrayCheckBox.Checked; // Replaces minimizeToTray's value to the current value
-            Settings.Default["MinimizeToTray"] = MinimizetoTrayCheckBox.Checked; // Replaces "False" to the current value
-            Settings.Default.Save(); // Saves the current value
+            form2.ShowDialog();
+
+            if (form2.disableTriple == true)
+            {
+                if (Convert.ToBoolean(form2.EDOClickTypeDropDownList.Items.IndexOf("Triple") != -1)) // Check if "Triple" is still in the list
+                {
+                    form2.EDOClickTypeDropDownList.Items.Remove("Triple");
+                }
+            } else
+            {
+                if (Convert.ToBoolean(form2.EDOClickTypeDropDownList.Items.IndexOf("Triple") != -1))
+                {
+                    return;
+                }
+                form2.EDOClickTypeDropDownList.Items.Add("Triple");
+            }
         }
     }
 }
