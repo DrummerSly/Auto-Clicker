@@ -107,7 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <Content Include="icon2.ico" />
     <Content Include="New Project %283%29.ico" />
+    <Content Include="OldIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
