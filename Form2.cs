@@ -1,4 +1,4 @@
-﻿using autoClicker.Properties;
+using autoClicker.Properties;
 using autoClicker2;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace autoClicker
 {
-    public partial class Form2 : Form
+    public partial class OptionsForm : Form
     {
         public bool minimizeToTray = Settings.Default.MinimizeToTray;
         public bool enableDefaultIntervals = Settings.Default.EnableDefaultIntervals;
@@ -21,18 +21,18 @@ namespace autoClicker
 
         public bool disableTriple = Settings.Default.DisableTriple;
 
-        private const int CP_NOCLOSE_BUTTON = 0x200;
+        private const int NoCloseButton = 0x200;
         protected override CreateParams CreateParams
         {
             get
             {
-                CreateParams myCp = base.CreateParams;
-                myCp.ClassStyle = myCp.ClassStyle | CP_NOCLOSE_BUTTON;
-                return myCp;
+                CreateParams MyCP = base.CreateParams;
+                MyCP.ClassStyle = MyCP.ClassStyle | NoCloseButton;
+                return MyCP;
             }
         }
 
-        public Form2()
+        public OptionsForm()
         {
             InitializeComponent();
         }   
@@ -42,28 +42,8 @@ namespace autoClicker
             this.Hide();
         }
 
-        private void MinimizetoTrayCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (MinimizetoTrayCheckBox.Checked == minimizeToTray)
-            {
-                ApplyButton.Enabled = false;
-            } else if (MinimizetoTrayCheckBox.Checked != minimizeToTray)
-            {
-                ApplyButton.Enabled = true;
-            }
-        }
-
         private void EnableDefaultIntervalsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (EnableDefaultIntervalsCheckBox.Checked == enableDefaultIntervals)
-            {
-                ApplyButton.Enabled = false;
-            }
-            else if (EnableDefaultIntervalsCheckBox.Checked != enableDefaultIntervals)
-            {
-                ApplyButton.Enabled = true;
-            }
-
             if (EnableDefaultIntervalsCheckBox.Checked == true)
             {
                 EDIHours.Enabled = true;
@@ -94,15 +74,6 @@ namespace autoClicker
 
         private void EnableDefaultOptionsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (EnableDefaultOptionsCheckBox.Checked == enableDefaultOptions)
-            {   
-                ApplyButton.Enabled = false;
-            }
-            else if (EnableDefaultOptionsCheckBox.Checked != enableDefaultOptions)
-            {
-                ApplyButton.Enabled = true;
-            }
-
             if (EnableDefaultOptionsCheckBox.Checked == true)
             {
                 EDOMouseButtonDropDownList.Enabled = true;
@@ -118,18 +89,6 @@ namespace autoClicker
                 label1.Enabled = false;
                 EDOMouseButtonDropDownList.SelectedItem = "Left";
                 EDOClickTypeDropDownList.SelectedItem = "Single";
-            }
-        }
-
-        private void DisableTripleCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (DisableTripleCheckBox.Checked == disableTriple)
-            {
-                ApplyButton.Enabled = false;
-            }
-            else if (DisableTripleCheckBox.Checked != disableTriple)
-            {
-                ApplyButton.Enabled = true;
             }
         }
 
@@ -164,42 +123,6 @@ namespace autoClicker
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            if (MinimizetoTrayCheckBox.Checked == minimizeToTray)
-            {
-                ApplyButton.Enabled = false;
-            }
-            else if (MinimizetoTrayCheckBox.Checked != minimizeToTray)
-            {
-                ApplyButton.Enabled = true;
-            }
-
-            if (EnableDefaultIntervalsCheckBox.Checked == enableDefaultIntervals)
-            {
-                ApplyButton.Enabled = false;
-            }
-            else if (EnableDefaultIntervalsCheckBox.Checked != enableDefaultIntervals)
-            {
-                ApplyButton.Enabled = true;
-            }
-
-            if (DisableTripleCheckBox.Checked == disableTriple)
-            {
-                ApplyButton.Enabled = false;
-            }
-            else if (DisableTripleCheckBox.Checked != disableTriple)
-            {
-                ApplyButton.Enabled = true;
-            }
-
-            if (EnableDefaultOptionsCheckBox.Checked == enableDefaultOptions)
-            {
-                ApplyButton.Enabled = false;
-            }
-            else if (EnableDefaultOptionsCheckBox.Checked != enableDefaultOptions)
-            {
-                ApplyButton.Enabled = true;
-            }
-
             EDIHours.Text = Convert.ToString(Settings.Default.EDIHoursInterval);
             EDIMinutes.Text = Convert.ToString(Settings.Default.EDIMinutesInterval);
             EDISeconds.Text = Convert.ToString(Settings.Default.EDISecondsInterval);
@@ -268,74 +191,6 @@ namespace autoClicker
             }
         }
 
-        private void EDIHours_TextChanged(object sender, EventArgs e)
-        {
-            if (EDIHours.Text == Convert.ToString(Settings.Default.EDIHoursInterval))
-            {
-                ApplyButton.Enabled = false;
-            }
-            else if (EDIHours.Text != Convert.ToString(Settings.Default.EDIHoursInterval))
-            {
-                ApplyButton.Enabled = true;
-            }
-
-            if (!Regex.IsMatch(EDIHours.Text, @"^\d+$"))
-            {
-                ApplyButton.Enabled = false;
-            }
-        }
-
-        private void EDIMinutes_TextChanged(object sender, EventArgs e)
-        {
-            if (EDIMinutes.Text == Convert.ToString(Settings.Default.EDIMinutesInterval))
-            {
-                ApplyButton.Enabled = false;
-            }
-            else if (EDIMinutes.Text != Convert.ToString(Settings.Default.EDIMinutesInterval))
-            {
-                ApplyButton.Enabled = true;
-            }
-
-            if (!Regex.IsMatch(EDIMinutes.Text, @"^\d+$"))
-            {
-                ApplyButton.Enabled = false;
-            }
-        }
-
-        private void EDISeconds_TextChanged(object sender, EventArgs e)
-        {
-            if (EDISeconds.Text == Convert.ToString(Settings.Default.EDISecondsInterval))
-            {
-                ApplyButton.Enabled = false;
-            }
-            else if (EDISeconds.Text != Convert.ToString(Settings.Default.EDISecondsInterval))
-            {
-                ApplyButton.Enabled = true;
-            }
-
-            if (!Regex.IsMatch(EDISeconds.Text, @"^\d+$"))
-            {
-                ApplyButton.Enabled = false;
-            }
-        }
-
-        private void EDIMiliseconds_TextChanged(object sender, EventArgs e)
-        {
-            if (EDIMiliseconds.Text == Convert.ToString(Settings.Default.EDIMilisecondsInterval))
-            {
-                ApplyButton.Enabled = false;
-            }
-            else if (EDIMiliseconds.Text != Convert.ToString(Settings.Default.EDIMilisecondsInterval))
-            {
-                ApplyButton.Enabled = true;
-            }
-
-            if (!Regex.IsMatch(EDIMiliseconds.Text, @"^\d+$"))
-            {
-                ApplyButton.Enabled = false;
-            }
-        }
-
         private void EnableDefaultIntervalsCheckBox_MouseHover(object sender, EventArgs e)
         {
             ToolTip.SetToolTip(EnableDefaultIntervalsCheckBox, "If enabled, you can set your own intervals so that the next time\nyou open the application. The default intervals will turn into\nyour preferred intervals. (Restart the application to take changes)");
@@ -354,45 +209,6 @@ namespace autoClicker
         private void EnableDefaultOptionsCheckBox_MouseHover(object sender, EventArgs e)
         {
             ToolTip.SetToolTip(EnableDefaultOptionsCheckBox, "If enabled, you can set your own click options so that\nthe next time you open the application. The default click options will\nturn into your click options. (Restart the application to take changes)");
-        }
-
-        private void EDOMouseButtonDropDownList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (Convert.ToString(EDOMouseButtonDropDownList.SelectedItem) != Settings.Default.EDOMouseButton || EnableDefaultOptionsCheckBox.Checked != enableDefaultOptions)
-            {
-                ApplyButton.Enabled = true;
-            } 
-            else if (Convert.ToString(EDOMouseButtonDropDownList.SelectedItem) == Settings.Default.EDOMouseButton)
-            {
-                ApplyButton.Enabled = false;
-            }
-        }
-
-        private void EDOClickTypeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (Convert.ToString(EDOClickTypeDropDownList.SelectedItem) != Settings.Default.EDOClickType || EnableDefaultOptionsCheckBox.Checked != enableDefaultOptions)
-            {
-                ApplyButton.Enabled = true;
-            }
-            else if (Convert.ToString(EDOClickTypeDropDownList.SelectedItem) == Settings.Default.EDOClickType)
-            {
-                ApplyButton.Enabled = false;
-            }
-
-            if (Convert.ToString(EDOClickTypeDropDownList.SelectedItem) == "")
-            {
-                ApplyButton.Enabled = false;
-            }
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
