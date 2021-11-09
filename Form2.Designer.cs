@@ -1,6 +1,6 @@
-﻿namespace autoClicker
+namespace autoClicker
 {
-    partial class Form2
+    partial class OptionsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionsForm));
             this.MinimizetoTrayCheckBox = new System.Windows.Forms.CheckBox();
             this.CancelButton = new System.Windows.Forms.Button();
             this.ApplyButton = new System.Windows.Forms.Button();
@@ -61,7 +61,6 @@
             this.MinimizetoTrayCheckBox.TabIndex = 24;
             this.MinimizetoTrayCheckBox.Text = "Minimize to Tray";
             this.MinimizetoTrayCheckBox.UseVisualStyleBackColor = false;
-            this.MinimizetoTrayCheckBox.CheckedChanged += new System.EventHandler(this.MinimizetoTrayCheckBox_CheckedChanged);
             this.MinimizetoTrayCheckBox.MouseHover += new System.EventHandler(this.MinimizetoTrayCheckBox_MouseHover);
             // 
             // CancelButton
@@ -76,7 +75,6 @@
             // 
             // ApplyButton
             // 
-            this.ApplyButton.Enabled = false;
             this.ApplyButton.Location = new System.Drawing.Point(154, 154);
             this.ApplyButton.Name = "ApplyButton";
             this.ApplyButton.Size = new System.Drawing.Size(75, 23);
@@ -95,7 +93,6 @@
             this.DisableTripleCheckBox.TabIndex = 36;
             this.DisableTripleCheckBox.Text = "Disable Triple";
             this.DisableTripleCheckBox.UseVisualStyleBackColor = false;
-            this.DisableTripleCheckBox.CheckedChanged += new System.EventHandler(this.DisableTripleCheckBox_CheckedChanged);
             this.DisableTripleCheckBox.MouseHover += new System.EventHandler(this.DisableTripleCheckBox_MouseHover);
             // 
             // label3
@@ -119,7 +116,6 @@
             this.EDISeconds.TabIndex = 34;
             this.EDISeconds.Text = "0";
             this.EDISeconds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.EDISeconds.TextChanged += new System.EventHandler(this.EDISeconds_TextChanged);
             // 
             // EDIHours
             // 
@@ -131,7 +127,6 @@
             this.EDIHours.TabIndex = 32;
             this.EDIHours.Text = "0";
             this.EDIHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.EDIHours.TextChanged += new System.EventHandler(this.EDIHours_TextChanged);
             // 
             // EnableDefaultIntervalsCheckBox
             // 
@@ -156,7 +151,6 @@
             this.EDIMinutes.TabIndex = 33;
             this.EDIMinutes.Text = "0";
             this.EDIMinutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.EDIMinutes.TextChanged += new System.EventHandler(this.EDIMinutes_TextChanged);
             // 
             // label2
             // 
@@ -179,7 +173,6 @@
             this.EDIMiliseconds.TabIndex = 35;
             this.EDIMiliseconds.Text = "100";
             this.EDIMiliseconds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.EDIMiliseconds.TextChanged += new System.EventHandler(this.EDIMiliseconds_TextChanged);
             // 
             // label5
             // 
@@ -231,7 +224,6 @@
             this.EDOMouseButtonDropDownList.Name = "EDOMouseButtonDropDownList";
             this.EDOMouseButtonDropDownList.Size = new System.Drawing.Size(58, 21);
             this.EDOMouseButtonDropDownList.TabIndex = 38;
-            this.EDOMouseButtonDropDownList.SelectedIndexChanged += new System.EventHandler(this.EDOMouseButtonDropDownList_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -243,7 +235,6 @@
             this.label7.Size = new System.Drawing.Size(76, 13);
             this.label7.TabIndex = 39;
             this.label7.Text = "Mouse Button:";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label1
             // 
@@ -255,7 +246,6 @@
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 40;
             this.label1.Text = "Click Type:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // EDOClickTypeDropDownList
             // 
@@ -272,9 +262,8 @@
             this.EDOClickTypeDropDownList.Name = "EDOClickTypeDropDownList";
             this.EDOClickTypeDropDownList.Size = new System.Drawing.Size(58, 21);
             this.EDOClickTypeDropDownList.TabIndex = 41;
-            this.EDOClickTypeDropDownList.SelectedIndexChanged += new System.EventHandler(this.EDOClickTypeDropDownList_SelectedIndexChanged);
             // 
-            // Form2
+            // OptionsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -297,9 +286,10 @@
             this.Controls.Add(this.ApplyButton);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.MinimizetoTrayCheckBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Form2";
+            this.Name = "OptionsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Options";
             this.Load += new System.EventHandler(this.Form2_Load);
