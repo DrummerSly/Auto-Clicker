@@ -1,7 +1,7 @@
 
 namespace autoClicker2
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -32,7 +32,7 @@ namespace autoClicker2
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.GroupBox groupBox1;
             System.Windows.Forms.GroupBox groupBox2;
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.Hours = new System.Windows.Forms.TextBox();
             this.Minutes = new System.Windows.Forms.TextBox();
             this.Seconds = new System.Windows.Forms.TextBox();
@@ -49,11 +49,15 @@ namespace autoClicker2
             this.StopButton = new System.Windows.Forms.Button();
             this.EnableACHotkey = new System.ComponentModel.BackgroundWorker();
             this.MinimizedNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.MNIContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OptionsButton = new System.Windows.Forms.Button();
             groupBox1 = new System.Windows.Forms.GroupBox();
             groupBox2 = new System.Windows.Forms.GroupBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            this.MNIContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -250,10 +254,32 @@ namespace autoClicker2
             // MinimizedNotifyIcon
             // 
             this.MinimizedNotifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.MinimizedNotifyIcon.ContextMenuStrip = this.MNIContextMenuStrip;
             this.MinimizedNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("MinimizedNotifyIcon.Icon")));
             this.MinimizedNotifyIcon.Text = "Auto Clicker";
             this.MinimizedNotifyIcon.Visible = true;
-            this.MinimizedNotifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MinimizedNotifyIcon_MouseClick);
+            // 
+            // MNIContextMenuStrip
+            // 
+            this.MNIContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showToolStripMenuItem,
+            this.closeToolStripMenuItem});
+            this.MNIContextMenuStrip.Name = "MNIContextMenuStrip";
+            this.MNIContextMenuStrip.Size = new System.Drawing.Size(104, 48);
+            // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.showToolStripMenuItem.Text = "Show";
+            this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // closeToolStripMenuItem
+            // 
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // OptionsButton
             // 
@@ -266,7 +292,7 @@ namespace autoClicker2
             this.OptionsButton.UseVisualStyleBackColor = true;
             this.OptionsButton.Click += new System.EventHandler(this.OptionsButton_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -279,7 +305,7 @@ namespace autoClicker2
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Auto Clicker";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -288,6 +314,7 @@ namespace autoClicker2
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
+            this.MNIContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -310,6 +337,9 @@ namespace autoClicker2
         private System.Windows.Forms.TextBox Minutes;
         private System.Windows.Forms.TextBox Seconds;
         private System.Windows.Forms.TextBox Miliseconds;
+        private System.Windows.Forms.ContextMenuStrip MNIContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
     }
 }
 
