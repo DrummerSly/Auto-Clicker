@@ -32,29 +32,31 @@ namespace autoClicker2
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.GroupBox groupBox1;
             System.Windows.Forms.GroupBox groupBox2;
+            System.Windows.Forms.Label label7;
+            System.Windows.Forms.Label label8;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.Hours = new System.Windows.Forms.TextBox();
-            this.Minutes = new System.Windows.Forms.TextBox();
-            this.Seconds = new System.Windows.Forms.TextBox();
+            this.HoursTextbox = new System.Windows.Forms.TextBox();
+            this.MinutesTextbox = new System.Windows.Forms.TextBox();
+            this.SecondsTextbox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.Miliseconds = new System.Windows.Forms.TextBox();
+            this.MilisecondsTextbox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.ClickTypeDropDownList = new System.Windows.Forms.ComboBox();
             this.MouseButtonDropDownList = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.StartButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
-            this.EnableACHotkey = new System.ComponentModel.BackgroundWorker();
             this.MinimizedNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.MNIContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OptionsButton = new System.Windows.Forms.Button();
+            this.ACBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             groupBox1 = new System.Windows.Forms.GroupBox();
             groupBox2 = new System.Windows.Forms.GroupBox();
+            label7 = new System.Windows.Forms.Label();
+            label8 = new System.Windows.Forms.Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             this.MNIContextMenuStrip.SuspendLayout();
@@ -62,12 +64,12 @@ namespace autoClicker2
             // 
             // groupBox1
             // 
-            groupBox1.Controls.Add(this.Hours);
-            groupBox1.Controls.Add(this.Minutes);
-            groupBox1.Controls.Add(this.Seconds);
+            groupBox1.Controls.Add(this.HoursTextbox);
+            groupBox1.Controls.Add(this.MinutesTextbox);
+            groupBox1.Controls.Add(this.SecondsTextbox);
             groupBox1.Controls.Add(this.label2);
             groupBox1.Controls.Add(this.label3);
-            groupBox1.Controls.Add(this.Miliseconds);
+            groupBox1.Controls.Add(this.MilisecondsTextbox);
             groupBox1.Controls.Add(this.label4);
             groupBox1.Controls.Add(this.label5);
             groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -76,40 +78,40 @@ namespace autoClicker2
             groupBox1.Size = new System.Drawing.Size(118, 133);
             groupBox1.TabIndex = 24;
             groupBox1.TabStop = false;
-            groupBox1.Text = "Click Interval";
+            groupBox1.Text = "Click Intervals";
             // 
-            // Hours
+            // HoursTextbox
             // 
-            this.Hours.Location = new System.Drawing.Point(6, 25);
-            this.Hours.MaxLength = 6;
-            this.Hours.Name = "Hours";
-            this.Hours.Size = new System.Drawing.Size(43, 20);
-            this.Hours.TabIndex = 5;
-            this.Hours.Text = "0";
-            this.Hours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Hours.TextChanged += new System.EventHandler(this.Hours_TextChanged);
+            this.HoursTextbox.Location = new System.Drawing.Point(6, 25);
+            this.HoursTextbox.MaxLength = 6;
+            this.HoursTextbox.Name = "HoursTextbox";
+            this.HoursTextbox.Size = new System.Drawing.Size(43, 20);
+            this.HoursTextbox.TabIndex = 5;
+            this.HoursTextbox.Text = "0";
+            this.HoursTextbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.HoursTextbox.TextChanged += new System.EventHandler(this.Hours_TextChanged);
             // 
-            // Minutes
+            // MinutesTextbox
             // 
-            this.Minutes.Location = new System.Drawing.Point(6, 51);
-            this.Minutes.MaxLength = 6;
-            this.Minutes.Name = "Minutes";
-            this.Minutes.Size = new System.Drawing.Size(43, 20);
-            this.Minutes.TabIndex = 7;
-            this.Minutes.Text = "0";
-            this.Minutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Minutes.TextChanged += new System.EventHandler(this.Minutes_TextChanged);
+            this.MinutesTextbox.Location = new System.Drawing.Point(6, 51);
+            this.MinutesTextbox.MaxLength = 6;
+            this.MinutesTextbox.Name = "MinutesTextbox";
+            this.MinutesTextbox.Size = new System.Drawing.Size(43, 20);
+            this.MinutesTextbox.TabIndex = 7;
+            this.MinutesTextbox.Text = "0";
+            this.MinutesTextbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.MinutesTextbox.TextChanged += new System.EventHandler(this.Minutes_TextChanged);
             // 
-            // Seconds
+            // SecondsTextbox
             // 
-            this.Seconds.Location = new System.Drawing.Point(6, 77);
-            this.Seconds.MaxLength = 6;
-            this.Seconds.Name = "Seconds";
-            this.Seconds.Size = new System.Drawing.Size(43, 20);
-            this.Seconds.TabIndex = 8;
-            this.Seconds.Text = "0";
-            this.Seconds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Seconds.TextChanged += new System.EventHandler(this.Seconds_TextChanged);
+            this.SecondsTextbox.Location = new System.Drawing.Point(6, 77);
+            this.SecondsTextbox.MaxLength = 6;
+            this.SecondsTextbox.Name = "SecondsTextbox";
+            this.SecondsTextbox.Size = new System.Drawing.Size(43, 20);
+            this.SecondsTextbox.TabIndex = 8;
+            this.SecondsTextbox.Text = "0";
+            this.SecondsTextbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.SecondsTextbox.TextChanged += new System.EventHandler(this.Seconds_TextChanged);
             // 
             // label2
             // 
@@ -129,16 +131,16 @@ namespace autoClicker2
             this.label3.TabIndex = 2;
             this.label3.Text = "minutes";
             // 
-            // Miliseconds
+            // MilisecondsTextbox
             // 
-            this.Miliseconds.Location = new System.Drawing.Point(6, 103);
-            this.Miliseconds.MaxLength = 6;
-            this.Miliseconds.Name = "Miliseconds";
-            this.Miliseconds.Size = new System.Drawing.Size(43, 20);
-            this.Miliseconds.TabIndex = 9;
-            this.Miliseconds.Text = "100";
-            this.Miliseconds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Miliseconds.TextChanged += new System.EventHandler(this.Miliseconds_TextChanged);
+            this.MilisecondsTextbox.Location = new System.Drawing.Point(6, 103);
+            this.MilisecondsTextbox.MaxLength = 6;
+            this.MilisecondsTextbox.Name = "MilisecondsTextbox";
+            this.MilisecondsTextbox.Size = new System.Drawing.Size(43, 20);
+            this.MilisecondsTextbox.TabIndex = 9;
+            this.MilisecondsTextbox.Text = "100";
+            this.MilisecondsTextbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.MilisecondsTextbox.TextChanged += new System.EventHandler(this.Miliseconds_TextChanged);
             // 
             // label4
             // 
@@ -160,12 +162,12 @@ namespace autoClicker2
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(this.label7);
+            groupBox2.Controls.Add(label7);
             groupBox2.Controls.Add(this.ClickTypeDropDownList);
             groupBox2.Controls.Add(this.MouseButtonDropDownList);
-            groupBox2.Controls.Add(this.label8);
+            groupBox2.Controls.Add(label8);
             groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            groupBox2.Location = new System.Drawing.Point(135, 7);
+            groupBox2.Location = new System.Drawing.Point(144, 7);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new System.Drawing.Size(150, 82);
             groupBox2.TabIndex = 25;
@@ -174,13 +176,13 @@ namespace autoClicker2
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Location = new System.Drawing.Point(4, 26);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(76, 13);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Mouse Button:";
+            label7.AutoSize = true;
+            label7.BackColor = System.Drawing.Color.Transparent;
+            label7.Location = new System.Drawing.Point(4, 26);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(76, 13);
+            label7.TabIndex = 13;
+            label7.Text = "Mouse Button:";
             // 
             // ClickTypeDropDownList
             // 
@@ -196,7 +198,6 @@ namespace autoClicker2
             this.ClickTypeDropDownList.Name = "ClickTypeDropDownList";
             this.ClickTypeDropDownList.Size = new System.Drawing.Size(58, 21);
             this.ClickTypeDropDownList.TabIndex = 18;
-            this.ClickTypeDropDownList.SelectedIndexChanged += new System.EventHandler(this.ClickTypeDropDownList_SelectedIndexChanged);
             // 
             // MouseButtonDropDownList
             // 
@@ -212,24 +213,23 @@ namespace autoClicker2
             this.MouseButtonDropDownList.Name = "MouseButtonDropDownList";
             this.MouseButtonDropDownList.Size = new System.Drawing.Size(58, 21);
             this.MouseButtonDropDownList.TabIndex = 17;
-            this.MouseButtonDropDownList.SelectedIndexChanged += new System.EventHandler(this.MouseButtonDropDownList_SelectedIndexChanged);
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Location = new System.Drawing.Point(4, 55);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(60, 13);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "Click Type:";
+            label8.AutoSize = true;
+            label8.BackColor = System.Drawing.Color.Transparent;
+            label8.Location = new System.Drawing.Point(4, 55);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(60, 13);
+            label8.TabIndex = 14;
+            label8.Text = "Click Type:";
             // 
             // StartButton
             // 
             this.StartButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.StartButton.Location = new System.Drawing.Point(11, 146);
             this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(274, 50);
+            this.StartButton.Size = new System.Drawing.Size(283, 50);
             this.StartButton.TabIndex = 6;
             this.StartButton.Text = "Start (F6)";
             this.StartButton.UseVisualStyleBackColor = true;
@@ -241,15 +241,11 @@ namespace autoClicker2
             this.StopButton.Enabled = false;
             this.StopButton.Location = new System.Drawing.Point(11, 202);
             this.StopButton.Name = "StopButton";
-            this.StopButton.Size = new System.Drawing.Size(274, 53);
+            this.StopButton.Size = new System.Drawing.Size(283, 53);
             this.StopButton.TabIndex = 10;
             this.StopButton.Text = "Stop (F7)";
             this.StopButton.UseVisualStyleBackColor = true;
             this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
-            // 
-            // EnableACHotkey
-            // 
-            this.EnableACHotkey.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             // 
             // MinimizedNotifyIcon
             // 
@@ -257,7 +253,6 @@ namespace autoClicker2
             this.MinimizedNotifyIcon.ContextMenuStrip = this.MNIContextMenuStrip;
             this.MinimizedNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("MinimizedNotifyIcon.Icon")));
             this.MinimizedNotifyIcon.Text = "Auto Clicker";
-            this.MinimizedNotifyIcon.Visible = true;
             // 
             // MNIContextMenuStrip
             // 
@@ -284,7 +279,7 @@ namespace autoClicker2
             // OptionsButton
             // 
             this.OptionsButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.OptionsButton.Location = new System.Drawing.Point(135, 94);
+            this.OptionsButton.Location = new System.Drawing.Point(144, 94);
             this.OptionsButton.Name = "OptionsButton";
             this.OptionsButton.Size = new System.Drawing.Size(150, 46);
             this.OptionsButton.TabIndex = 23;
@@ -292,11 +287,15 @@ namespace autoClicker2
             this.OptionsButton.UseVisualStyleBackColor = true;
             this.OptionsButton.Click += new System.EventHandler(this.OptionsButton_Click);
             // 
+            // ACBackgroundWorker
+            // 
+            this.ACBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.ACBackgroundWorker_DoWork);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(297, 265);
+            this.ClientSize = new System.Drawing.Size(306, 265);
             this.Controls.Add(groupBox2);
             this.Controls.Add(this.OptionsButton);
             this.Controls.Add(this.StopButton);
@@ -304,6 +303,7 @@ namespace autoClicker2
             this.Controls.Add(groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -326,20 +326,18 @@ namespace autoClicker2
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button StartButton;
         private System.Windows.Forms.Button StopButton;
-        private System.ComponentModel.BackgroundWorker EnableACHotkey;
         private System.Windows.Forms.NotifyIcon MinimizedNotifyIcon;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.ComboBox MouseButtonDropDownList;
-        public System.Windows.Forms.ComboBox ClickTypeDropDownList;
         private System.Windows.Forms.Button OptionsButton;
-        private System.Windows.Forms.TextBox Hours;
-        private System.Windows.Forms.TextBox Minutes;
-        private System.Windows.Forms.TextBox Seconds;
-        private System.Windows.Forms.TextBox Miliseconds;
+        private System.Windows.Forms.TextBox HoursTextbox;
+        private System.Windows.Forms.TextBox MinutesTextbox;
+        private System.Windows.Forms.TextBox SecondsTextbox;
+        private System.Windows.Forms.TextBox MilisecondsTextbox;
         private System.Windows.Forms.ContextMenuStrip MNIContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.ComponentModel.BackgroundWorker ACBackgroundWorker;
+        public System.Windows.Forms.ComboBox ClickTypeDropDownList;
     }
 }
 
