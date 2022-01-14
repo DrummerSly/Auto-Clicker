@@ -1,192 +1,172 @@
-using System;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Windows.Forms;
-using autoClicker;
+using System.Runtime.InteropServices;
 using autoClicker.Properties;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Threading;
+using autoClicker;
+using System;
 
-namespace autoClicker2
+namespace autoClicker2 // I made an auto clicker back then but it sucks
 {
     public partial class MainForm : Form
     {
-        // This lines is very important
         [DllImport("user32.dll")]
-        static extern short GetAsyncKeyState(Keys vKey);
+        static extern int GetAsyncKeyState(Keys key);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        public static extern void MouseEvent(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
+        static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
 
-        OptionsForm form2 = new OptionsForm();
-        
-        // Hex codes for mouse buttons
-        private const int LeftUp = 0x0004;
-        private const int LeftDown = 0x0002;
-        private const int MiddleUp = 0x0040;
-        private const int MiddleDown = 0x0020;
-        private const int RightUp = 0x0010;
-        private const int RightDown = 0x0008;
-       
-        public int MilisecondsIntervals = 100;
-        public int SecondsIntervals = 0;
-        public int MinutesIntervals = 0;
-        public int HoursIntervals = 0;
+        public static OptionsForm optionsForm = new OptionsForm();
 
-        public bool enabled = false;
+        int leftUp = 0x0004;
+        int leftDown = 0x0002;
+        int middleUp = 0x0040;
+        int middleDown = 0x0020;
+        int rightUp = 0x0010;
+        int rightDown = 0x0008;
 
-        public string ClickType = "Single";
-        public string MouseButton = "Left";
+        int milisecondsIntervals = 100;
+        int secondsIntervals;
+        int minutesIntervals;
+        int hoursIntervals;
+
+        bool enabled = false;
+
+        string clickType = "Single";
+        string mouseButton = "Left";
 
         public MainForm()
         {
             InitializeComponent();
         }
-        
+
         private void Form1_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
+
             Thread AC = new Thread(AutoClick);
             AC.IsBackground = true;
-            EnableACHotkey.RunWorkerAsync(); // Starts the AC background worker
-            MinimizedNotifyIcon.Visible = false;
-            form2.MinimizetoTrayCheckBox.Checked = Settings.Default.MinimizeToTray; // Loads the user settings
-            form2.EnableDefaultIntervalsCheckBox.Checked = Settings.Default.EnableDefaultIntervals;
-            form2.DisableTripleCheckBox.Checked = Settings.Default.DisableTriple;
-            form2.EnableDefaultOptionsCheckBox.Checked = Settings.Default.EnableDefaultOptions;
 
-            AC.Start(); // Starts AutoClick()
+            ACBackgroundWorker.RunWorkerAsync();
 
-            if (form2.disableTriple == true)
+            MouseButtonDropDownList.Text = "Left";
+            ClickTypeDropDownList.Text = "Single";
+
+            optionsForm.MinimizetoTrayCheckBox.Checked = Settings.Default.MinimizeToTray;
+            optionsForm.EnableDefaultIntervalsCheckBox.Checked = Settings.Default.EnableDefaultIntervals;
+            optionsForm.EnableDefaultOptionsCheckBox.Checked = Settings.Default.EnableDefaultOptions;
+            optionsForm.StartMinimizedCheckBox.Checked = Settings.Default.StartMinimized;
+
+            if (Settings.Default.EnableDefaultIntervals == true)
             {
-                ClickTypeDropDownList.Items.Remove("Triple");
+                HoursTextbox.Text = Convert.ToString(Settings.Default.EDIHoursInterval);
+                MinutesTextbox.Text = Convert.ToString(Settings.Default.EDIMinutesInterval);
+                SecondsTextbox.Text = Convert.ToString(Settings.Default.EDISecondsInterval);
+                MilisecondsTextbox.Text = Convert.ToString(Settings.Default.EDIMilisecondsInterval);
             }
 
-            if (form2.enableDefaultIntervals == true)
-            {
-                Hours.Text = Convert.ToString(Settings.Default.EDIHoursInterval);
-                Minutes.Text = Convert.ToString(Settings.Default.EDIMinutesInterval);
-                Seconds.Text = Convert.ToString(Settings.Default.EDISecondsInterval);
-                Miliseconds.Text = Convert.ToString(Settings.Default.EDIMilisecondsInterval);
-            }
-
-            if (form2.enableDefaultOptions == true)
+            if (Settings.Default.EnableDefaultOptions == true)
             {
                 MouseButtonDropDownList.SelectedItem = Settings.Default.EDOMouseButton;
                 ClickTypeDropDownList.SelectedItem = Settings.Default.EDOClickType;
             }
 
-            if (Settings.Default.EnableDefaultOptions == false)
+            if (Settings.Default.StartMinimized == true)
             {
-                ClickTypeDropDownList.Text = "Single";
-                MouseButtonDropDownList.Text = "Left";
+                this.ShowInTaskbar = false;
+                MinimizedNotifyIcon.Visible = true;
+                MinimizedNotifyIcon.Icon = this.Icon;
             }
+
+            AC.Start();
         }
-        
-        private void SingleClickType(int HexCodeUp, int HexCodeDown)
+
+        void SingleClickType(int HexCodeUp, int HexCodeDown)
         {
-            MouseEvent(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(1);
-
-            MouseEvent(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(int.Parse(HoursIntervals.ToString().PadRight(7, '0')));
-            Thread.Sleep(int.Parse(MinutesIntervals.ToString().PadRight(5, '0')));
-            Thread.Sleep(int.Parse(SecondsIntervals.ToString().PadRight(4, '0')));
-            Thread.Sleep(int.Parse(SecondsIntervals.ToString().PadRight(4, '0')));
-            Thread.Sleep(MilisecondsIntervals);
+            mouse_event(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            mouse_event(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(int.Parse(hoursIntervals.ToString() + 0 + 0 + 0 + 0 + 0));
+            Thread.Sleep(int.Parse(minutesIntervals.ToString() + 0 + 0 + 0 + 0));
+            Thread.Sleep(int.Parse(secondsIntervals.ToString() + 0 + 0 + 0));
+            Thread.Sleep(milisecondsIntervals);
         }
 
-        private void DoubleClickType(int HexCodeUp, int HexCodeDown)
+        void DoubleClickType(int HexCodeUp, int HexCodeDown)
         {
-            MouseEvent(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(1);
-
-            MouseEvent(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(1);
-
-            MouseEvent(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(1);
-
-            MouseEvent(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(int.Parse(HoursIntervals.ToString().PadRight(7, '0')));
-            Thread.Sleep(int.Parse(MinutesIntervals.ToString().PadRight(5, '0')));
-            Thread.Sleep(int.Parse(SecondsIntervals.ToString().PadRight(4, '0')));
-            Thread.Sleep(MilisecondsIntervals);
+            mouse_event(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            mouse_event(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            mouse_event(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            mouse_event(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(int.Parse(hoursIntervals.ToString() + 0 + 0 + 0 + 0 + 0));
+            Thread.Sleep(int.Parse(minutesIntervals.ToString() + 0 + 0 + 0 + 0));
+            Thread.Sleep(int.Parse(secondsIntervals.ToString() + 0 + 0 + 0));
+            Thread.Sleep(milisecondsIntervals);
         }
 
-        private void TripleClickType(int HexCodeUp, int HexCodeDown)
+        void TripleClickType(int HexCodeUp, int HexCodeDown)
         {
-            MouseEvent(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(1);
-
-            MouseEvent(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(1);
-
-            MouseEvent(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(1);
-
-            MouseEvent(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(1);
-
-            MouseEvent(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(1);
-
-            MouseEvent(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-            Thread.Sleep(int.Parse(HoursIntervals.ToString().PadRight(7, '0')));
-            Thread.Sleep(int.Parse(MinutesIntervals.ToString().PadRight(5, '0')));
-            Thread.Sleep(int.Parse(SecondsIntervals.ToString().PadRight(4, '0')));
-            Thread.Sleep(MilisecondsIntervals);
+            mouse_event(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            mouse_event(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            mouse_event(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            mouse_event(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            mouse_event(dwFlags: HexCodeUp, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            mouse_event(dwFlags: HexCodeDown, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+            Thread.Sleep(int.Parse(hoursIntervals.ToString() + 0 + 0 + 0 + 0 + 0));
+            Thread.Sleep(int.Parse(minutesIntervals.ToString() + 0 + 0 + 0 + 0));
+            Thread.Sleep(int.Parse(secondsIntervals.ToString() + 0 + 0 + 0));
+            Thread.Sleep(milisecondsIntervals);
         }
 
-        private void AutoClick()
+        void AutoClick()
         {
             while (true)
             {
                 if (enabled == true)
                 {
-                    if (MouseButton == "Left") // Checks if MouseButtonDropDownList's text is Left
+                    if (mouseButton == "Left")
                     {
-                        if (ClickType == "Single") // Checks if ClickTypeDropDownList's text is Single
+                        if (clickType == "Single")
                         {
-                            SingleClickType(LeftUp, LeftDown);
+                            SingleClickType(leftUp, leftDown);
                         }
-                        else if (ClickType == "Double") // Checks if ClickTypeDropDownList's text is Double
+                        else if (clickType == "Double")
                         {
-                            DoubleClickType(LeftUp, LeftDown);
+                            DoubleClickType(leftUp, leftDown);
                         }
-                        else if (ClickType == "Triple") // Checks if ClickTypeDropDownList's text is Triple
+                        else if (clickType == "Triple")
                         {
-                            TripleClickType(LeftUp, LeftDown);
+                            TripleClickType(leftUp, leftDown);
                         }
                     }
-                    else if (MouseButton == "Middle") // Checks if MouseButtonDropDownList's text is Middle
+                    else if (mouseButton == "Middle")
                     {
-                        if (ClickType == "Single")
+                        if (clickType == "Single")
                         {
-                            SingleClickType(MiddleUp, MiddleDown);
+                            SingleClickType(middleUp, middleDown);
                         }
-                        else if (ClickType == "Double")
+                        else if (clickType == "Double")
                         {
-                            DoubleClickType(MiddleUp, MiddleDown);
+                            DoubleClickType(middleUp, middleDown);
                         }
-                        else if (ClickType == "Triple")
+                        else if (clickType == "Triple")
                         {
-                            TripleClickType(MiddleUp, MiddleDown);
+                            TripleClickType(middleUp, middleDown);
                         }
                     }
-                    else if (MouseButton == "Right") // Checks if MouseButtonDropDownList's text is Right
+                    else if (mouseButton == "Right")
                     {
-                        if (ClickType == "Single")
+                        if (clickType == "Single")
                         {
-                            SingleClickType(RightUp, RightDown);
+                            SingleClickType(rightUp, rightDown);
                         }
-                        else if (ClickType == "Double")
+                        else if (clickType == "Double")
                         {
-                            DoubleClickType(RightUp, RightDown);
+                            DoubleClickType(rightUp, rightDown);
                         }
-                        else if (ClickType == "Triple")
+                        else if (clickType == "Triple")
                         {
-                            TripleClickType(RightUp, RightDown);
+                            TripleClickType(rightUp, rightDown);
                         }
                     }
                 }
@@ -199,6 +179,11 @@ namespace autoClicker2
             StartButton.Enabled = false;
             enabled = true;
             StopButton.Enabled = true;
+
+            if (this.WindowState != FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
         }
 
         private void StopButton_Click(object sender, EventArgs e)
@@ -210,92 +195,83 @@ namespace autoClicker2
 
         private void Miliseconds_TextChanged(object sender, EventArgs e)
         {
-            if (Regex.IsMatch(Miliseconds.Text, @"^\d+$"))
+            if (!Regex.IsMatch(MilisecondsTextbox.Text, @"^\d+$"))
             {
-                StartButton.Enabled = true;
-                MilisecondsIntervals = int.Parse(Miliseconds.Text); // Makes the interval's value to the text of textbox interval's
+                StartButton.Enabled = false;
             }
             else
             {
-                StartButton.Enabled = false;
+                milisecondsIntervals = Convert.ToInt32(MilisecondsTextbox.Text);
+                //Console.WriteLine(milisecondsIntervals);
+                if (Regex.IsMatch(HoursTextbox.Text, @"^\d+$") && Regex.IsMatch(MinutesTextbox.Text, @"^\d+$") && Regex.IsMatch(SecondsTextbox.Text, @"^\d+$"))
+                {
+                    StartButton.Enabled = true;
+                }
             }
         }
-
+        
         private void Seconds_TextChanged(object sender, EventArgs e)
         {
-            if (Regex.IsMatch(Miliseconds.Text, @"^\d+$"))
+            if (!Regex.IsMatch(SecondsTextbox.Text, @"^\d+$"))
             {
-                StartButton.Enabled = true;
-                SecondsIntervals = int.Parse(Seconds.Text);
+                StartButton.Enabled = false;
             }
             else
             {
-                StartButton.Enabled = false;
+                secondsIntervals = Convert.ToInt32(SecondsTextbox.Text);
+                //Console.WriteLine(secondsIntervals);
+                if (Regex.IsMatch(HoursTextbox.Text, @"^\d+$") && Regex.IsMatch(MinutesTextbox.Text, @"^\d+$") && Regex.IsMatch(MilisecondsTextbox.Text, @"^\d+$"))
+                {
+                    StartButton.Enabled = true;
+                }
             }
         }
 
         private void Minutes_TextChanged(object sender, EventArgs e)
         {
-            if (Regex.IsMatch(Minutes.Text, @"^\d+$"))
+            if (!Regex.IsMatch(MinutesTextbox.Text, @"^\d+$"))
             {
-                if (int.Parse(Minutes.Text) != 0) // Checks if the numeric isn't 0
-                {
-                    StartButton.Enabled = true;
-                    MinutesIntervals = int.Parse(Minutes.Text) + 5;
-                }
+                StartButton.Enabled = false;
             }
             else
             {
-                StartButton.Enabled = false;
+                if (int.Parse(MinutesTextbox.Text) != 0)
+                {
+                    minutesIntervals = Convert.ToInt32(MinutesTextbox.Text) + 5;
+                    //Console.WriteLine(minutesIntervals);
+                    if (Regex.IsMatch(HoursTextbox.Text, @"^\d+$") && Regex.IsMatch(SecondsTextbox.Text, @"^\d+$") && Regex.IsMatch(MilisecondsTextbox.Text, @"^\d+$"))
+                    {
+                        StartButton.Enabled = true;
+                    }
+                }
             }
         }
 
         private void Hours_TextChanged(object sender, EventArgs e)
         {
-            if (Regex.IsMatch(Hours.Text, @"^\d+$"))
-            {
-                if (int.Parse(Hours.Text) != 0)
-                {
-                    StartButton.Enabled = true;
-                    HoursIntervals = int.Parse(Hours.Text) + 5;
-                }
-            }
-            else
+            if (!Regex.IsMatch(HoursTextbox.Text, @"^\d+$"))
             {
                 StartButton.Enabled = false;
             }
-        }
-
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            while (true)
+            else
             {
-                if (enabled == true)
+                if (int.Parse(HoursTextbox.Text) != 0)
                 {
-                    if (GetAsyncKeyState(Keys.F7) < 0) // Checks if you pressed F7
+                    hoursIntervals = Convert.ToInt32(HoursTextbox.Text) + 35;
+                    //Console.WriteLine(hoursIntervals);
+                    if (Regex.IsMatch(MinutesTextbox.Text, @"^\d+$") && Regex.IsMatch(SecondsTextbox.Text, @"^\d+$") && Regex.IsMatch(MilisecondsTextbox.Text, @"^\d+$"))
                     {
                         StartButton.Enabled = true;
-                        enabled = false;
-                        StopButton.Enabled = false;
                     }
-                } else if (enabled == false)
-                {
-                    if (GetAsyncKeyState(Keys.F6) < 0)
-                    {
-                        StartButton.Enabled = false;
-                        enabled = true;
-                        StopButton.Enabled = true;
-                    }    
                 }
-                Thread.Sleep(1);
             }
         }
 
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized) // Checks if the window is minimized
-            {           
-                if (form2.minimizeToTray == true) // Checks if minimizeToTray's value is true
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                if (Settings.Default.MinimizeToTray == true)
                 {
                     this.ShowInTaskbar = false;
                     MinimizedNotifyIcon.Visible = true;
@@ -304,34 +280,19 @@ namespace autoClicker2
             }
         }
 
-        private void MouseButtonDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        private void mouseButtonDropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MouseButton = MouseButtonDropDownList.Text;
+            mouseButton = MouseButtonDropDownList.Text;
         }
 
-        private void ClickTypeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
+        private void clickTypeDropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ClickType = ClickTypeDropDownList.Text;
+            clickType = ClickTypeDropDownList.Text;
         }
 
         private void OptionsButton_Click(object sender, EventArgs e)
         {
-            form2.ShowDialog();
-
-            if (form2.disableTriple == true)
-            {
-                if (Convert.ToBoolean(form2.EDOClickTypeDropDownList.Items.IndexOf("Triple") != -1)) // Check if "Triple" is still in the list
-                {
-                    form2.EDOClickTypeDropDownList.Items.Remove("Triple");
-                }
-            } else
-            {
-                if (Convert.ToBoolean(form2.EDOClickTypeDropDownList.Items.IndexOf("Triple") != -1))
-                {
-                    return;
-                }
-                form2.EDOClickTypeDropDownList.Items.Add("Triple");
-            }
+            optionsForm.ShowDialog();
         }
 
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
@@ -344,6 +305,42 @@ namespace autoClicker2
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ACBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                if (enabled == true && StartButton.Enabled == false)
+                {
+                    if (GetAsyncKeyState(Keys.F7) < 0)
+                    {
+                        StartButton.Enabled = true;
+                        enabled = false;
+                        StopButton.Enabled = false;
+
+                        if (this.WindowState == FormWindowState.Minimized)
+                        {
+                            this.WindowState = FormWindowState.Normal;
+                        }
+                    }
+                }
+                else if (enabled == false && StartButton.Enabled != false)
+                {
+                    if (GetAsyncKeyState(Keys.F6) < 0)
+                    {
+                        StartButton.Enabled = false;
+                        enabled = true;
+                        StopButton.Enabled = true;
+
+                        if (this.WindowState != FormWindowState.Minimized)
+                        {
+                            this.WindowState = FormWindowState.Minimized;
+                        }
+                    }
+                }
+                Thread.Sleep(1);
+            }
         }
     }
 }
