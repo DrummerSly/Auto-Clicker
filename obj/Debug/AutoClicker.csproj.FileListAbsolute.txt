@@ -1,0 +1,10 @@
+C:\Users\CENTRIX CAFE\source\repos\autoClicker\bin\Debug\AutoClicker.exe.config
+C:\Users\CENTRIX CAFE\source\repos\autoClicker\bin\Debug\AutoClicker.exe
+C:\Users\CENTRIX CAFE\source\repos\autoClicker\bin\Debug\AutoClicker.pdb
+C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.MainForm.resources
+C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.Form2.resources
+C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.Properties.Resources.resources
+C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.csproj.GenerateResource.cache
+C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.csproj.CoreCompileInputs.cache
+C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.exe
+C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.pdb
