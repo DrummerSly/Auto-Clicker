@@ -12,7 +12,14 @@ namespace AutoClicker
         private static extern int GetAsyncKeyState(Keys key);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        private static extern void mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwEI);
+        private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+
+        int leftUp = 0x04;
+        int middleUp = 0x40;
+        int rightUp = 0x10;
+        int leftDown = 0x02;
+        int middleDown = 0x20;
+        int rightDown = 0x08;
 
         int hInterval;
         int mInterval;
@@ -24,7 +31,7 @@ namespace AutoClicker
         int sInput;
         int miInput;
 
-        bool enabled = false;
+        bool enabled;
 
         string mouseButton;
         string clickType;
@@ -39,48 +46,48 @@ namespace AutoClicker
                     {
                         if (clickType == "Single")
                         {
-                            mouse_event(0x04, 0, 0, 0, 0);
-                            mouse_event(0x02, 0, 0, 0, 0);
+                            mouse_event(leftUp, 0, 0, 0, 0);
+                            mouse_event(leftDown, 0, 0, 0, 0);
                         }
                         else
                         {
-                            mouse_event(0x04, 0, 0, 0, 0);
-                            mouse_event(0x02, 0, 0, 0, 0);
-                            mouse_event(0x04, 0, 0, 0, 0);
-                            mouse_event(0x02, 0, 0, 0, 0);
+                            mouse_event(leftUp, 0, 0, 0, 0);
+                            mouse_event(leftDown, 0, 0, 0, 0);
+                            mouse_event(leftUp, 0, 0, 0, 0);
+                            mouse_event(leftDown, 0, 0, 0, 0);
                         }
                     } else if (mouseButton == "Middle")
                     {
                         if (clickType == "Single")
                         {
-                            mouse_event(0x40, 0, 0, 0, 0);
-                            mouse_event(0x20, 0, 0, 0, 0);
+                            mouse_event(middleUp, 0, 0, 0, 0);
+                            mouse_event(middleDown, 0, 0, 0, 0);
                         }
                         else
                         {
-                            mouse_event(0x40, 0, 0, 0, 0);
-                            mouse_event(0x20, 0, 0, 0, 0);
-                            mouse_event(0x40, 0, 0, 0, 0);
-                            mouse_event(0x20, 0, 0, 0, 0);
+                            mouse_event(middleUp, 0, 0, 0, 0);
+                            mouse_event(middleDown, 0, 0, 0, 0);
+                            mouse_event(middleUp, 0, 0, 0, 0);
+                            mouse_event(middleDown, 0, 0, 0, 0);
                         }
                     } else if (mouseButton == "Right")
                     {
                         if (clickType == "Single")
                         {
-                            mouse_event(0x10, 0, 0, 0, 0);
-                            mouse_event(0x08, 0, 0, 0, 0);
+                            mouse_event(rightUp, 0, 0, 0, 0);
+                            mouse_event(rightDown, 0, 0, 0, 0);
                         }
                         else
                         {
-                            mouse_event(0x10, 0, 0, 0, 0);
-                            mouse_event(0x08, 0, 0, 0, 0);
-                            mouse_event(0x10, 0, 0, 0, 0);
-                            mouse_event(0x08, 0, 0, 0, 0);
+                            mouse_event(rightUp, 0, 0, 0, 0);
+                            mouse_event(rightDown, 0, 0, 0, 0);
+                            mouse_event(rightUp, 0, 0, 0, 0);
+                            mouse_event(rightDown, 0, 0, 0, 0);
                         }
                     }
                     Thread.Sleep(hInterval + mInterval + sInterval + miInterval);
                 }
-                Thread.Sleep(1);
+                Thread.Sleep(10);
             }
         }
 
@@ -90,7 +97,7 @@ namespace AutoClicker
         }
 
         private void MainForm_Load(object sender, EventArgs e)
-        {
+        {      
             CheckForIllegalCrossThreadCalls = false;
 
             Thread AC = new Thread(AutoClick);
@@ -106,27 +113,16 @@ namespace AutoClicker
             MBDropDownList.SelectedItem = Settings.Default.EDOMouseButton;
             CTDropDownList.SelectedItem = Settings.Default.EDOClickType;
 
-            if (Settings.Default.EnableDefaultIntervals == true)
-            {
-                HTextBox.Text = Settings.Default.EDIHoursInterval.ToString();
-                MTextBox.Text = Settings.Default.EDIMinutesInterval.ToString();
-                STextBox.Text = Settings.Default.EDISecondsInterval.ToString();
-                MiTextBox.Text = Settings.Default.EDIMilisecondsInterval.ToString();
-            }
+            HTextBox.Text = Settings.Default.EDIHoursInterval.ToString();
+            MTextBox.Text = Settings.Default.EDIMinutesInterval.ToString();
+            STextBox.Text = Settings.Default.EDISecondsInterval.ToString();
+            MiTextBox.Text = Settings.Default.EDIMilisecondsInterval.ToString();
 
             AC.Start();
         }
 
         private void StartButton_Click(object sender, EventArgs e)
         {
-            if (Settings.Default.KeepWindowOnTop == false)
-            {
-                if (this.WindowState == FormWindowState.Normal)
-                {
-                    this.WindowState = FormWindowState.Minimized;
-                }
-            }
-
             if (Settings.Default.DisplayStatus == true)
             {
                 this.Text = "Auto Clicker: Running";
@@ -139,6 +135,11 @@ namespace AutoClicker
 
         private void StopButton_Click(object sender, EventArgs e)
         {
+            if (Settings.Default.DisplayStatus == true)
+            {
+                this.Text = "Auto Clicker: Stopped";
+            }
+
             StartButton.Enabled = true;
             StopButton.Enabled = false;
             enabled = false;
@@ -146,72 +147,60 @@ namespace AutoClicker
 
         private void HTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (HTextBox.Text != "0")
+            if (int.TryParse(HTextBox.Text, out hInput))
             {
-                if (int.TryParse(HTextBox.Text, out hInput))
-                {
-                    hInterval = 3600000 * hInput;
-                }
-                else
-                {
-                    HTextBox.Text = "";
-                }
+                hInterval = 3600000 * hInput;
+            }
+            else
+            {
+                HTextBox.Text = "";
             }
         }
 
         private void MTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (MTextBox.Text != "0")
+            if (int.TryParse(MTextBox.Text, out mInput))
             {
-                if (int.TryParse(MTextBox.Text, out mInput))
-                {
-                    mInterval = 60000 * mInput;
-                }
-                else
-                {
-                    MTextBox.Text = "";
-                }
+                mInterval = 60000 * mInput;
+            }
+            else
+            {
+                MTextBox.Text = "";
             }
         }
 
         private void STextBox_TextChanged(object sender, EventArgs e)
         {
-            if (STextBox.Text != "0")
+            if (int.TryParse(STextBox.Text, out sInput))
             {
-                if (int.TryParse(STextBox.Text, out sInput))
-                {
-                    sInterval = 1000 * sInput;
-                }
-                else
-                {
-                    STextBox.Text = "";
-                }
+                sInterval = 1000 * sInput;
+            }
+            else
+            {
+                STextBox.Text = "";
             }
         }
 
         private void MiTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (MiTextBox.Text != "0")
+            if (int.TryParse(MiTextBox.Text, out miInput))
             {
-                if (int.TryParse(MiTextBox.Text, out miInput))
-                {
-                    miInterval = 1 * miInput;
-                }
-                else
-                {
-                    MiTextBox.Text = "";
-                }
+                miInterval = miInput;
+            }
+            else
+            {
+                MiTextBox.Text = "";
             }
         }
 
         private void MBDropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            mouseButton = MBDropDownList.SelectedItem.ToString();
+            mouseButton = MBDropDownList.Text;
         }
 
         private void CTDropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            clickType = CTDropDownList.SelectedItem.ToString();
+            clickType = CTDropDownList.Text;
         }
 
         private void BackgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -231,8 +220,7 @@ namespace AutoClicker
                         StopButton.Enabled = true;
                         enabled = true;
                     }
-                }
-                else if (enabled == true)
+                } else
                 {
                     if (GetAsyncKeyState(Keys.RControlKey) < 0)
                     {
@@ -268,7 +256,7 @@ namespace AutoClicker
             }
         }
 
-        private void NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
             this.Show();
             NotifyIcon.Visible = false;

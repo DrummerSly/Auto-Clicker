@@ -8,3 +8,4 @@ C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.csproj.Gene
 C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.csproj.CoreCompileInputs.cache
 C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.exe
 C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.pdb
+C:\Users\CENTRIX CAFE\source\repos\autoClicker\obj\Debug\AutoClicker.csproj.AssemblyReference.cache

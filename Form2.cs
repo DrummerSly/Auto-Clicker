@@ -17,7 +17,12 @@ namespace AutoClicker
         }
 
         Form form1;
-        
+
+        int ediHInput;
+        int ediMInput;
+        int ediSInput;
+        int ediMiInput;
+
         public Form2(Form parentForm)
         {
             InitializeComponent();
@@ -67,32 +72,60 @@ namespace AutoClicker
 
         private void EDIHours_TextChanged(object sender, EventArgs e)
         {
-            Settings.Default.EDIHoursInterval = Int32.Parse(EDIHours.Text);
+            if (int.TryParse(EDIHours.Text, out ediHInput))
+            {
+                Settings.Default.EDIHoursInterval = ediHInput;
+            }
+            else
+            {
+                EDIHours.Text = "";
+            }
         }
 
         private void EDIMinutes_TextChanged(object sender, EventArgs e)
         {
-            Settings.Default.EDIMinutesInterval = Int32.Parse(EDIMinutes.Text);
+            if (int.TryParse(EDIMinutes.Text, out ediMInput))
+            {
+                Settings.Default.EDIMinutesInterval = ediMInput;
+            }
+            else
+            {
+                EDIMinutes.Text = "";
+            }
         }
 
         private void EDISeconds_TextChanged(object sender, EventArgs e)
         {
-            Settings.Default.EDISecondsInterval = Int32.Parse(EDISeconds.Text);
+            if (int.TryParse(EDISeconds.Text, out ediSInput))
+            {
+                Settings.Default.EDISecondsInterval = ediSInput;
+            }
+            else
+            {
+                EDISeconds.Text = "";
+            }
         }
 
         private void EDIMiliseconds_TextChanged(object sender, EventArgs e)
         {
-            Settings.Default.EDIMilisecondsInterval = Int32.Parse(EDIMiliseconds.Text);
+            if (int.TryParse(EDIMiliseconds.Text, out ediMiInput))
+            {
+                Settings.Default.EDIMilisecondsInterval = ediMiInput;
+            }
+            else
+            {
+                EDIMiliseconds.Text = "";
+            }
         }
 
         private void EDOMBDropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.Default.EDOMouseButton = EDOMBDropDownList.SelectedItem.ToString();
+            Settings.Default.EDOMouseButton = EDOMBDropDownList.Text;
         }
 
         private void EDOCTDropDownList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Settings.Default.EDOClickType = EDOCTDropDownList.SelectedItem.ToString();
+            Settings.Default.EDOClickType = EDOCTDropDownList.Text;
         }
 
         private void DSCheckBox_CheckedChanged(object sender, EventArgs e)

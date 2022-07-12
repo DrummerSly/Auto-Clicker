@@ -80,18 +80,24 @@ namespace AutoClicker
             // 
             resources.ApplyResources(this.HTextBox, "HTextBox");
             this.HTextBox.Name = "HTextBox";
+            this.HTextBox.ShortcutsEnabled = false;
+            this.HTextBox.TabStop = false;
             this.HTextBox.TextChanged += new System.EventHandler(this.HTextBox_TextChanged);
             // 
             // MTextBox
             // 
             resources.ApplyResources(this.MTextBox, "MTextBox");
             this.MTextBox.Name = "MTextBox";
+            this.MTextBox.ShortcutsEnabled = false;
+            this.MTextBox.TabStop = false;
             this.MTextBox.TextChanged += new System.EventHandler(this.MTextBox_TextChanged);
             // 
             // STextBox
             // 
             resources.ApplyResources(this.STextBox, "STextBox");
             this.STextBox.Name = "STextBox";
+            this.STextBox.ShortcutsEnabled = false;
+            this.STextBox.TabStop = false;
             this.STextBox.TextChanged += new System.EventHandler(this.STextBox_TextChanged);
             // 
             // label2
@@ -108,6 +114,8 @@ namespace AutoClicker
             // 
             resources.ApplyResources(this.MiTextBox, "MiTextBox");
             this.MiTextBox.Name = "MiTextBox";
+            this.MiTextBox.ShortcutsEnabled = false;
+            this.MiTextBox.TabStop = false;
             this.MiTextBox.TextChanged += new System.EventHandler(this.MiTextBox_TextChanged);
             // 
             // label4
@@ -146,6 +154,8 @@ namespace AutoClicker
             resources.GetString("CTDropDownList.Items1")});
             resources.ApplyResources(this.CTDropDownList, "CTDropDownList");
             this.CTDropDownList.Name = "CTDropDownList";
+            this.CTDropDownList.Sorted = true;
+            this.CTDropDownList.TabStop = false;
             this.CTDropDownList.SelectedIndexChanged += new System.EventHandler(this.CTDropDownList_SelectedIndexChanged);
             // 
             // MBDropDownList
@@ -159,6 +169,7 @@ namespace AutoClicker
             resources.GetString("MBDropDownList.Items2")});
             resources.ApplyResources(this.MBDropDownList, "MBDropDownList");
             this.MBDropDownList.Name = "MBDropDownList";
+            this.MBDropDownList.TabStop = false;
             this.MBDropDownList.SelectedIndexChanged += new System.EventHandler(this.MBDropDownList_SelectedIndexChanged);
             // 
             // label8
@@ -172,6 +183,7 @@ namespace AutoClicker
             this.OptionsButton.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.OptionsButton, "OptionsButton");
             this.OptionsButton.Name = "OptionsButton";
+            this.OptionsButton.TabStop = false;
             this.OptionsButton.UseVisualStyleBackColor = true;
             this.OptionsButton.Click += new System.EventHandler(this.OptionsButton_Click);
             // 
@@ -180,6 +192,7 @@ namespace AutoClicker
             this.StopButton.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.StopButton, "StopButton");
             this.StopButton.Name = "StopButton";
+            this.StopButton.TabStop = false;
             this.StopButton.UseVisualStyleBackColor = true;
             this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
             // 
@@ -188,6 +201,7 @@ namespace AutoClicker
             this.StartButton.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.StartButton, "StartButton");
             this.StartButton.Name = "StartButton";
+            this.StartButton.TabStop = false;
             this.StartButton.UseVisualStyleBackColor = true;
             this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
             // 
@@ -199,7 +213,7 @@ namespace AutoClicker
             // 
             this.NotifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             resources.ApplyResources(this.NotifyIcon, "NotifyIcon");
-            this.NotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseDoubleClick);
+            this.NotifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseClick);
             // 
             // MainForm
             // 

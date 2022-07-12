@@ -439,10 +439,10 @@
     <value>0</value>
   </data>
   <data name="CTDropDownList.Items" xml:space="preserve">
-    <value>Single</value>
+    <value>Double</value>
   </data>
   <data name="CTDropDownList.Items1" xml:space="preserve">
-    <value>Double</value>
+    <value>Single</value>
   </data>
   <data name="CTDropDownList.Location" type="System.Drawing.Point, System.Drawing">
     <value>86, 46</value>
@@ -457,7 +457,7 @@
     <value>58, 21</value>
   </data>
   <data name="CTDropDownList.TabIndex" type="System.Int32, mscorlib">
-    <value>22</value>
+    <value>25</value>
   </data>
   <data name="&gt;&gt;CTDropDownList.Name" xml:space="preserve">
     <value>CTDropDownList</value>
@@ -493,7 +493,7 @@
     <value>58, 21</value>
   </data>
   <data name="MBDropDownList.TabIndex" type="System.Int32, mscorlib">
-    <value>21</value>
+    <value>20</value>
   </data>
   <data name="&gt;&gt;MBDropDownList.Name" xml:space="preserve">
     <value>MBDropDownList</value>
@@ -574,7 +574,7 @@
     <value>150, 43</value>
   </data>
   <data name="OptionsButton.TabIndex" type="System.Int32, mscorlib">
-    <value>24</value>
+    <value>18</value>
   </data>
   <data name="OptionsButton.Text" xml:space="preserve">
     <value>Options</value>

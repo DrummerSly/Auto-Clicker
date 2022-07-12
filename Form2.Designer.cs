@@ -81,7 +81,8 @@ namespace AutoClicker
             this.KPoTCheckBox.Name = "KPoTCheckBox";
             this.KPoTCheckBox.Size = new System.Drawing.Size(130, 17);
             this.KPoTCheckBox.TabIndex = 44;
-            this.KPoTCheckBox.Text = "Keep Window on Top";
+            this.KPoTCheckBox.TabStop = false;
+            this.KPoTCheckBox.Text = "Keep Program on Top";
             this.KPoTCheckBox.UseVisualStyleBackColor = false;
             this.KPoTCheckBox.CheckedChanged += new System.EventHandler(this.KPoTCheckBox_CheckedChanged);
             // 
@@ -94,6 +95,7 @@ namespace AutoClicker
             this.DSCheckBox.Name = "DSCheckBox";
             this.DSCheckBox.Size = new System.Drawing.Size(93, 17);
             this.DSCheckBox.TabIndex = 43;
+            this.DSCheckBox.TabStop = false;
             this.DSCheckBox.Text = "Display Status";
             this.DSCheckBox.UseVisualStyleBackColor = false;
             this.DSCheckBox.CheckedChanged += new System.EventHandler(this.DSCheckBox_CheckedChanged);
@@ -107,6 +109,7 @@ namespace AutoClicker
             this.MtTCheckBox.Name = "MtTCheckBox";
             this.MtTCheckBox.Size = new System.Drawing.Size(102, 17);
             this.MtTCheckBox.TabIndex = 24;
+            this.MtTCheckBox.TabStop = false;
             this.MtTCheckBox.Text = "Minimize to Tray";
             this.MtTCheckBox.UseVisualStyleBackColor = false;
             this.MtTCheckBox.CheckedChanged += new System.EventHandler(this.MtTCheckBox_CheckedChanged);
@@ -136,6 +139,7 @@ namespace AutoClicker
             this.EDOCheckBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.EDOCheckBox.Size = new System.Drawing.Size(135, 17);
             this.EDOCheckBox.TabIndex = 37;
+            this.EDOCheckBox.TabStop = false;
             this.EDOCheckBox.Text = "Enable Default Options";
             this.EDOCheckBox.UseVisualStyleBackColor = false;
             this.EDOCheckBox.CheckedChanged += new System.EventHandler(this.EDOCheckBox_CheckedChanged);
@@ -156,6 +160,7 @@ namespace AutoClicker
             this.EDOMBDropDownList.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.EDOMBDropDownList.Size = new System.Drawing.Size(58, 21);
             this.EDOMBDropDownList.TabIndex = 38;
+            this.EDOMBDropDownList.TabStop = false;
             this.EDOMBDropDownList.SelectedIndexChanged += new System.EventHandler(this.EDOMBDropDownList_SelectedIndexChanged);
             // 
             // EDOMBLabel
@@ -185,6 +190,7 @@ namespace AutoClicker
             this.EDOCTDropDownList.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.EDOCTDropDownList.Size = new System.Drawing.Size(58, 21);
             this.EDOCTDropDownList.TabIndex = 41;
+            this.EDOCTDropDownList.TabStop = false;
             this.EDOCTDropDownList.SelectedIndexChanged += new System.EventHandler(this.EDOCTDropDownList_SelectedIndexChanged);
             // 
             // EDOCTLabel
@@ -226,6 +232,7 @@ namespace AutoClicker
             this.EDICheckBox.Name = "EDICheckBox";
             this.EDICheckBox.Size = new System.Drawing.Size(134, 17);
             this.EDICheckBox.TabIndex = 27;
+            this.EDICheckBox.TabStop = false;
             this.EDICheckBox.Text = "Enable Default Interval";
             this.EDICheckBox.UseVisualStyleBackColor = false;
             this.EDICheckBox.CheckedChanged += new System.EventHandler(this.EDICheckBox_CheckedChanged);
@@ -236,8 +243,10 @@ namespace AutoClicker
             this.EDIMinutes.Location = new System.Drawing.Point(6, 68);
             this.EDIMinutes.MaxLength = 6;
             this.EDIMinutes.Name = "EDIMinutes";
+            this.EDIMinutes.ShortcutsEnabled = false;
             this.EDIMinutes.Size = new System.Drawing.Size(43, 20);
             this.EDIMinutes.TabIndex = 33;
+            this.EDIMinutes.TabStop = false;
             this.EDIMinutes.Text = "0";
             this.EDIMinutes.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.EDIMinutes.TextChanged += new System.EventHandler(this.EDIMinutes_TextChanged);
@@ -248,8 +257,10 @@ namespace AutoClicker
             this.EDISeconds.Location = new System.Drawing.Point(6, 94);
             this.EDISeconds.MaxLength = 6;
             this.EDISeconds.Name = "EDISeconds";
+            this.EDISeconds.ShortcutsEnabled = false;
             this.EDISeconds.Size = new System.Drawing.Size(43, 20);
             this.EDISeconds.TabIndex = 34;
+            this.EDISeconds.TabStop = false;
             this.EDISeconds.Text = "0";
             this.EDISeconds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.EDISeconds.TextChanged += new System.EventHandler(this.EDISeconds_TextChanged);
@@ -260,8 +271,10 @@ namespace AutoClicker
             this.EDIHours.Location = new System.Drawing.Point(6, 42);
             this.EDIHours.MaxLength = 6;
             this.EDIHours.Name = "EDIHours";
+            this.EDIHours.ShortcutsEnabled = false;
             this.EDIHours.Size = new System.Drawing.Size(43, 20);
             this.EDIHours.TabIndex = 32;
+            this.EDIHours.TabStop = false;
             this.EDIHours.Text = "0";
             this.EDIHours.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.EDIHours.TextChanged += new System.EventHandler(this.EDIHours_TextChanged);
@@ -316,8 +329,10 @@ namespace AutoClicker
             this.EDIMiliseconds.Location = new System.Drawing.Point(6, 120);
             this.EDIMiliseconds.MaxLength = 6;
             this.EDIMiliseconds.Name = "EDIMiliseconds";
+            this.EDIMiliseconds.ShortcutsEnabled = false;
             this.EDIMiliseconds.Size = new System.Drawing.Size(43, 20);
             this.EDIMiliseconds.TabIndex = 35;
+            this.EDIMiliseconds.TabStop = false;
             this.EDIMiliseconds.Text = "100";
             this.EDIMiliseconds.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.EDIMiliseconds.TextChanged += new System.EventHandler(this.EDIMiliseconds_TextChanged);
@@ -329,6 +344,7 @@ namespace AutoClicker
             this.ApplyButton.Name = "ApplyButton";
             this.ApplyButton.Size = new System.Drawing.Size(75, 23);
             this.ApplyButton.TabIndex = 49;
+            this.ApplyButton.TabStop = false;
             this.ApplyButton.Text = "Apply";
             this.ApplyButton.UseVisualStyleBackColor = true;
             this.ApplyButton.Click += new System.EventHandler(this.ApplyButton_Click);
@@ -340,6 +356,7 @@ namespace AutoClicker
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 48;
+            this.CancelButton.TabStop = false;
             this.CancelButton.Text = "Cancel";
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
